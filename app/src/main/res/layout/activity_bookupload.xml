@@ -37,13 +37,13 @@
         android:layout_height="46dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="Category"
         android:inputType="textPersonName"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toEndOf="@+id/price_text"
         app:layout_constraintTop_toBottomOf="@+id/author_text" />
 
@@ -51,8 +51,8 @@
         android:id="@+id/price_text"
         android:layout_width="131dp"
         android:layout_height="44dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="Price"
         android:inputType="textPersonName"
@@ -65,12 +65,12 @@
         android:layout_height="44dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="168dp"
         android:ems="10"
         android:hint="Author"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toEndOf="@+id/title_text"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,7 +80,6 @@
         android:layout_height="45dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Title"
@@ -90,7 +89,7 @@
         app:layout_constraintHorizontal_bias="0.183"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.426" />
+        app:layout_constraintVertical_bias="0.357" />
 
     <Button
         android:id="@+id/image_button"
@@ -112,16 +111,18 @@
 
     <EditText
         android:id="@+id/info_text"
-        android:layout_width="215dp"
-        android:layout_height="65dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="183dp"
+        android:layout_height="58dp"
+        android:layout_marginBottom="72dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:hint="Additional Information"
         android:inputType="textPersonName"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/add_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.831"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
@@ -136,5 +137,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/common_google_signin_btn_icon_light_normal_background" />
+
+    <EditText
+        android:id="@+id/stock_Text"
+        android:layout_width="84dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="72dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:hint="Stock"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/add_button"
+        app:layout_constraintEnd_toStartOf="@+id/info_text"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

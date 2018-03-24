@@ -11,6 +11,7 @@ public class Book {
     String author;
     String price;
     String category;
+    String stock;
     String info;
 
     public Book(){
@@ -18,13 +19,14 @@ public class Book {
     }
 
 
-    public Book(String imageURL, String title, String author, String price, String category, String info){
+    public Book(String imageURL, String title, String author, String price, String category, String stock, String info){
 
         this.imageURL = imageURL;
         this.title = title;
         this.author = author;
         this.price = price;
         this.category = category;
+        this.stock = stock;
         this.info = info;
     }
 
@@ -46,6 +48,10 @@ public class Book {
 
     public String getCategory() {
         return category;
+    }
+
+    public String getStock() {
+        return stock;
     }
 
     public String getInfo() {

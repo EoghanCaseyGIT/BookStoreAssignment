@@ -58,7 +58,7 @@ public class BookUpload extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     Button imageButton, saveButton;
-    EditText title, author, price, category, additionalInfo;
+    EditText title, author, price, category, stock, additionalInfo;
 
     ImageView SelectImage;
 
@@ -82,6 +82,7 @@ public class BookUpload extends AppCompatActivity {
         author = (EditText) findViewById(R.id.author_text);
         price = (EditText) findViewById(R.id.price_text);
         category = (EditText) findViewById(R.id.category_text);
+        stock = (EditText) findViewById(R.id.stock_Text);
         additionalInfo = (EditText) findViewById(R.id.info_text);
 
         progressDialog = new ProgressDialog(BookUpload.this);
@@ -179,7 +180,8 @@ public class BookUpload extends AppCompatActivity {
                             String Author = author.getText().toString().trim();
                             String Price = price.getText().toString().trim();
                             String Category = category.getText().toString().trim();
-                            String info = additionalInfo.getText().toString().trim();
+                            String Stock = stock.getText().toString().trim();
+                            String Info = additionalInfo.getText().toString().trim();
 
                             // Hiding the progressDialog after done uploading.
                             progressDialog.dismiss();
@@ -188,7 +190,7 @@ public class BookUpload extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Book has been added successfully ", Toast.LENGTH_LONG).show();
 
                             @SuppressWarnings("VisibleForTests")
-                            Book book = new Book(taskSnapshot.getDownloadUrl().toString(), Title, Author, Price, Category, info);
+                            Book book = new Book(taskSnapshot.getDownloadUrl().toString(), Title, Author, Price, Category, Stock, Info);
 
                             // Getting image upload ID.
                             String ImageUploadId = databaseReference.push().getKey();
@@ -245,7 +247,7 @@ public class BookUpload extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.main:
-                Toast.makeText(this, "Test", Toast.LENGTH_LONG).show();
+
                 Intent adminFeed = new Intent(this, AdminFeed.class);
                 this.startActivity(adminFeed);
                 return true;

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,8 +14,14 @@ import com.example.apple.BookStore.AccountActivity.BookClasses.BookListView;
 import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.R;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+
 
 /**
  * Created by eoghancasey on 21/03/2018.
@@ -29,15 +36,26 @@ public class AdminFeed extends AppCompatActivity {
     Integer[] imageID = {R.drawable.harrypotterimage, R.drawable.lordoftherings, R.drawable.gandalf};
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference reference = database.getReference("server/saving-data/fireblog/posts");
+
+
+
+    ArrayList<String> bookArrayList = new ArrayList<>();
+    FirebaseDatabase myFirebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminfeed);
 
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://bookstore-30213.firebaseio.com/All_Books");
+
+        final ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(this, R.layout.listview_layout);
+
 
         list = (ListView) findViewById(R.id.listView);
+        list.setAdapter(myArrayAdapter);
+
+
         BookListView bookListView = new BookListView(AdminFeed.this, bookTitle, bookAuthor, imageID);
         list.setAdapter(bookListView);
 

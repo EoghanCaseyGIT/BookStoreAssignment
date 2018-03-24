@@ -182,13 +182,9 @@ public class UserAccount extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void setDataToView(FirebaseUser user) {
-
         email.setText("User Email: " + user.getEmail());
-
-
     }
 
-    // this listener will be called when there is change in firebase user session
     FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
         @SuppressLint("SetTextI18n")
         @Override
