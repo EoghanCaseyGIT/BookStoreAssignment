@@ -116,11 +116,9 @@ public class Login extends AppCompatActivity {
 
 
         if(email.equals("admin@admin.com")){
-            Toast.makeText(this, "this is the if", Toast.LENGTH_LONG).show();
             adminIntent();
         }
         else {
-            Toast.makeText(this, "This is the else", Toast.LENGTH_LONG).show();
             userIntent();
         }
     }

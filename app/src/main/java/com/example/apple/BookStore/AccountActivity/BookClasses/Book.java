@@ -57,4 +57,32 @@ public class Book {
     public String getInfo() {
         return info;
     }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 }

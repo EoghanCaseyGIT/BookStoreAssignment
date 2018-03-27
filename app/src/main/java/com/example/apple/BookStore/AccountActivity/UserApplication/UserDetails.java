@@ -1,9 +1,11 @@
 package com.example.apple.BookStore.AccountActivity.UserApplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 
 import android.os.Bundle;
 
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -25,18 +27,37 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class UserDetails extends AppCompatActivity{
 
-    String Database_Path = "UserInformation";
+    String Database_Path = "User_Information";
     private FirebaseAuth auth;
+
+    ProgressDialog progressDialog;
+
+    EditText address, cardNum, cardDate;
+
+    DatabaseReference databaseReference;
+
 
 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userdetails);
 
         auth = FirebaseAuth.getInstance();
+
+
+        address = (EditText) findViewById(R.id.address);
+        cardNum = (EditText) findViewById(R.id.cardNumber);
+        cardDate = (EditText) findViewById(R.id.cardDate);
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
+
+
+
+        progressDialog = new ProgressDialog(UserDetails.this);
 
 
         //get current user
@@ -53,16 +74,34 @@ public class UserDetails extends AppCompatActivity{
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String address = Address.getText().toString();
-                String cardNumber = CardNumber.getText().toString();
-                String cardDate = CardDate.getText().toString();
 
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("User Information").child("Customer Information: " + FirebaseAuth.getInstance().getUid());
-                myRef.setValue(address + cardNumber + cardDate);
-                startActivity(new Intent(UserDetails.this, MainActivity.class));
+                progressDialog.setTitle("Saving your information..");
+                progressDialog.show();
+
+                saveUserDetails();
             }
         });
+
+    }
+
+    public void saveUserDetails(){
+
+
+        String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String Address = address.getText().toString().trim();
+        String CardNum = cardNum.getText().toString().trim();
+        String CardDate = cardDate.getText().toString().trim();
+
+        progressDialog.dismiss();
+
+        UserDetailsModel user = new UserDetailsModel(UserID, Address, CardNum, CardDate);
+
+
+        databaseReference.child(UserID).setValue(user);
+
+
+        startActivity(new Intent(UserDetails.this, MainActivity.class));
+
 
     }
 

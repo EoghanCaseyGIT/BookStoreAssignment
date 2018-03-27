@@ -156,26 +156,20 @@ public class BookUpload extends AppCompatActivity {
 
     public void UploadImageFileToFirebaseStorage() {
 
-        // Checking whether FilePathUri Is empty or not.
         if (FilePathUri != null) {
 
-            // Setting progressDialog Title.
             progressDialog.setTitle("Saving Book");
 
-            // Showing progressDialog.
             progressDialog.show();
 
-            // Creating second StorageReference.
             StorageReference storageReference2nd = storageReference.child(Storage_Path).child(System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
 
 
-            // Adding addOnSuccessListener to second StorageReference.
             storageReference2nd.putFile(FilePathUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            // Getting image name from EditText and store into string variable.
                             String Title = title.getText().toString().trim();
                             String Author = author.getText().toString().trim();
                             String Price = price.getText().toString().trim();
@@ -183,41 +177,32 @@ public class BookUpload extends AppCompatActivity {
                             String Stock = stock.getText().toString().trim();
                             String Info = additionalInfo.getText().toString().trim();
 
-                            // Hiding the progressDialog after done uploading.
                             progressDialog.dismiss();
 
-                            // Showing toast message after done uploading.
                             Toast.makeText(getApplicationContext(), "Book has been added successfully ", Toast.LENGTH_LONG).show();
 
                             @SuppressWarnings("VisibleForTests")
                             Book book = new Book(taskSnapshot.getDownloadUrl().toString(), Title, Author, Price, Category, Stock, Info);
 
-                            // Getting image upload ID.
                             String ImageUploadId = databaseReference.push().getKey();
 
-                            // Adding image upload id s child element into databaseReference.
                             databaseReference.child(ImageUploadId).setValue(book);
                         }
                     })
-                    // If something goes wrong .
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
 
-                            // Hiding the progressDialog.
                             progressDialog.dismiss();
 
-                            // Showing exception erro message.
                             Toast.makeText(BookUpload.this, exception.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     })
 
-                    // On progress change upload time.
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            // Setting progressDialog Title.
                             progressDialog.setTitle("Saving Book");
 
                         }

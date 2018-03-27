@@ -1,27 +1,44 @@
 package com.example.apple.BookStore.AccountActivity.AdminApplication;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+
+import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
 import com.example.apple.BookStore.AccountActivity.BookClasses.BookListView;
+import com.example.apple.BookStore.AccountActivity.CustomListAdapter;
 import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.R;
-import com.google.firebase.database.ChildEventListener;
+import com.google.android.gms.common.api.Response;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  * Created by eoghancasey on 21/03/2018.
@@ -35,12 +52,15 @@ public class AdminFeed extends AppCompatActivity {
     String[] bookAuthor = {"J.K Rowling", "J.R.R Tolkien", "Jesus"};
     Integer[] imageID = {R.drawable.harrypotterimage, R.drawable.lordoftherings, R.drawable.gandalf};
 
+    private CustomListAdapter adapter;
+    private List<Book> bookModelList = new ArrayList<Book>();
+
+
+
+
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
-
-    ArrayList<String> bookArrayList = new ArrayList<>();
-    FirebaseDatabase myFirebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +71,39 @@ public class AdminFeed extends AppCompatActivity {
 
         final ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(this, R.layout.listview_layout);
 
-
-        list = (ListView) findViewById(R.id.listView);
-        list.setAdapter(myArrayAdapter);
+        populateList();
 
 
-        BookListView bookListView = new BookListView(AdminFeed.this, bookTitle, bookAuthor, imageID);
-        list.setAdapter(bookListView);
+        }
 
+    public void populateList() {
+
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference allBooksRef = rootRef.child("All_Books");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Book> bookModelList = new ArrayList<>();
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Book book = ds.getValue(Book.class);
+                    bookModelList.add(book);
+                }
+                ListView list = (ListView) findViewById(R.id.listView);
+                CustomListAdapter adapter = new CustomListAdapter(AdminFeed.this, bookModelList);
+                list.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        allBooksRef.addListenerForSingleValueEvent(valueEventListener);
     }
 
+
+
+//        BookListView bookListView = new BookListView(AdminFeed.this, bookTitle, bookAuthor, imageID);
+//        list.setAdapter(bookListView);
 
 
     @Override
