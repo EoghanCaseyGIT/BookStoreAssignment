@@ -6,13 +6,34 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.apple.BookStore.AccountActivity.AdminApplication.AdminFeed;
+import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
+import com.example.apple.BookStore.AccountActivity.BookClasses.BookIndexed;
+import com.example.apple.BookStore.AccountActivity.UserApplication.ShoppingCart;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserDetails;
 import com.example.apple.BookStore.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    private CustomListAdapter adapter;
+    private List<Book> bookModelList = new ArrayList<Book>();
+    private ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +41,60 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
+        list = (ListView) findViewById(R.id.bookListView);
+        adapter = new CustomListAdapter(MainActivity.this, bookModelList);
+
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://bookstore-30213.firebaseio.com/All_Books");
+
+        final ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(this, R.layout.listview_layout);
+
+
+        populateList();
+    }
+
+    public void populateList() {
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference allBooksRef = rootRef.child("All_Books");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Book book = ds.getValue(Book.class);
+
+                    bookModelList.add(book);
+
+                    list.setAdapter(adapter);
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+
+        allBooksRef.addListenerForSingleValueEvent(valueEventListener);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent i = new Intent(MainActivity.this, BookIndexed.class);
+                i.putExtra("ValueKey", bookModelList.get(position).getTitle());
+                i.putExtra("ValueKey2", bookModelList.get(position).getAuthor());
+                i.putExtra("ValueKey3", bookModelList.get(position).getPrice());
+                i.putExtra("ValueKey4", bookModelList.get(position).getCategory());
+                i.putExtra("ValueKey5", bookModelList.get(position).getStock());
+                i.putExtra("ValueKey6", bookModelList.get(position).getInfo());
+                i.putExtra("ValueKey7", bookModelList.get(position).getImageURL());
+
+                startActivity(i);
+
+//                title = bookModelList.get(position).getTitle();
+//                author = bookModelList.get(position).getAuthor();
+
+            }
+        });
     }
 
 
