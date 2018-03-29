@@ -49,8 +49,6 @@ public class AdminFeed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminfeed);
 
-
-
         list = (ListView) findViewById(R.id.bookListView);
         adapter = new CustomListAdapter(AdminFeed.this, bookModelList);
 
@@ -73,9 +71,7 @@ public class AdminFeed extends AppCompatActivity {
                     Book book = ds.getValue(Book.class);
 
                     bookModelList.add(book);
-
                     list.setAdapter(adapter);
-
                 }
             }
             @Override
@@ -88,7 +84,7 @@ public class AdminFeed extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent i = new Intent(AdminFeed.this, BookIndexed.class);
+                Intent i = new Intent(AdminFeed.this, AdminBookIndex.class);
                 i.putExtra("ValueKey", bookModelList.get(position).getTitle());
                 i.putExtra("ValueKey2", bookModelList.get(position).getAuthor());
                 i.putExtra("ValueKey3", bookModelList.get(position).getPrice());
@@ -96,12 +92,10 @@ public class AdminFeed extends AppCompatActivity {
                 i.putExtra("ValueKey5", bookModelList.get(position).getStock());
                 i.putExtra("ValueKey6", bookModelList.get(position).getInfo());
                 i.putExtra("ValueKey7", bookModelList.get(position).getImageURL());
-
                 startActivity(i);
 
                 title = bookModelList.get(position).getTitle();
                 author = bookModelList.get(position).getAuthor();
-
             }
         });
     }
@@ -110,7 +104,6 @@ public class AdminFeed extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.admin_menu, menu);
-
         return true;
     }
 
@@ -126,7 +119,6 @@ public class AdminFeed extends AppCompatActivity {
                 Intent addBookIntent = new Intent(this, BookUpload.class);
                 this.startActivity(addBookIntent);
                 return true;
-
             case R.id.updateBook:
                 Intent updateBookIntent = new Intent(this, UpdateBook.class);
                 this.startActivity(updateBookIntent);
@@ -135,18 +127,14 @@ public class AdminFeed extends AppCompatActivity {
                 Intent searchUserIntent = new Intent(this, SearchUser.class);
                 this.startActivity(searchUserIntent);
                 return true;
-
             case R.id.account:
                 Intent profileIntent = new Intent(this, UserAccount.class);
                 this.startActivity(profileIntent);
                 return true;
-
             case R.id.logout:
                 Intent logoutIntent = new Intent(this, Login.class);
                 this.startActivity(logoutIntent);
                 return true;
-
-
             default:
                 return super.onOptionsItemSelected(item);
         }

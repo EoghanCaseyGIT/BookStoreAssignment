@@ -1,10 +1,12 @@
 package com.example.apple.BookStore.AccountActivity.BookClasses;
 
+import java.io.Serializable;
+
 /**
  * Created by eoghancasey on 20/03/2018.
  */
 
-public class Book {
+public class Book implements Serializable {
 
     String imageURL;
     String title;

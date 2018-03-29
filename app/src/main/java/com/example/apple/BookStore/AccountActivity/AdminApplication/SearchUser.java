@@ -25,9 +25,6 @@ public class SearchUser extends AppCompatActivity {
 
 
     }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -35,7 +32,6 @@ public class SearchUser extends AppCompatActivity {
 
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -49,7 +45,6 @@ public class SearchUser extends AppCompatActivity {
                 Intent addBookIntent = new Intent(this, BookUpload.class);
                 this.startActivity(addBookIntent);
                 return true;
-
             case R.id.updateBook:
                 Intent updateBookIntent = new Intent(this, UpdateBook.class);
                 this.startActivity(updateBookIntent);
@@ -58,18 +53,14 @@ public class SearchUser extends AppCompatActivity {
                 Intent searchUserIntent = new Intent(this, SearchUser.class);
                 this.startActivity(searchUserIntent);
                 return true;
-
             case R.id.account:
                 Intent profileIntent = new Intent(this, UserAccount.class);
                 this.startActivity(profileIntent);
                 return true;
-
             case R.id.logout:
                 Intent logoutIntent = new Intent(this, Login.class);
                 this.startActivity(logoutIntent);
                 return true;
-
-
             default:
                 return super.onOptionsItemSelected(item);
         }

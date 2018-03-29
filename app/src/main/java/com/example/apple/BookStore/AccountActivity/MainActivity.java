@@ -90,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
                 startActivity(i);
 
-//                title = bookModelList.get(position).getTitle();
-//                author = bookModelList.get(position).getAuthor();
 
             }
         });

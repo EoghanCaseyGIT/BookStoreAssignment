@@ -18,17 +18,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AccountActivity.UserApplication.UserAccount" />
+
         <activity android:name=".AccountActivity.RegisterActivity" />
         <activity android:name=".AccountActivity.ResetPasswordActivity" />
         <activity android:name=".AccountActivity.MainActivity" />
+
+        <activity android:name=".AccountActivity.UserApplication.UserDetails" />
+        <activity android:name=".AccountActivity.UserApplication.ShoppingCart" />
+        <activity android:name=".AccountActivity.UserApplication.UserAccount" />
+
+        <activity android:name=".AccountActivity.BookClasses.BookIndexed" />
+
+
+        <activity android:name=".AccountActivity.AdminApplication.AdminBookIndex" />
         <activity android:name=".AccountActivity.AdminApplication.AdminFeed" />
         <activity android:name=".AccountActivity.AdminApplication.BookUpload" />
         <activity android:name=".AccountActivity.AdminApplication.SearchUser" />
         <activity android:name=".AccountActivity.AdminApplication.UpdateBook" />
-        <activity android:name=".AccountActivity.UserApplication.UserDetails" />
-        <activity android:name=".AccountActivity.BookClasses.BookIndexed" />
-        <activity android:name=".AccountActivity.UserApplication.ShoppingCart" />
+
+
+        <activity android:name=".AccountActivity.OrderClasses.PlaceOrder" />
+
+
+
+
+
 
 
     </application>

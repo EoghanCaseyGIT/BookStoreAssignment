@@ -23,9 +23,7 @@ public class CustomListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<Book> bookItems;
-    private ImageView image;
 
-    //ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     public CustomListAdapter(Activity activity, List<Book> bookItems) {
         this.activity = activity;
@@ -72,7 +70,6 @@ public class CustomListAdapter extends BaseAdapter {
                 .into(image);
 
         title.setText(book.getTitle());
-        //location.setText(m.getLocation());
         author.setText(book.getAuthor());
 
         return convertView;
