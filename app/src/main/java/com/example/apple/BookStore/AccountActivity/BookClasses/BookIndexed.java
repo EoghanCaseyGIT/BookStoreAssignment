@@ -1,5 +1,6 @@
 package com.example.apple.BookStore.AccountActivity.BookClasses;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.apple.BookStore.AccountActivity.AdminApplication.AdminFeed;
 import com.example.apple.BookStore.AccountActivity.AdminApplication.BookUpload;
@@ -39,8 +41,11 @@ import java.util.List;
 public class BookIndexed extends AppCompatActivity {
 
     private TextView title, author, price, category, stock, info;
-    private Button addToCart;
+    private Button addToCart, checkout;
     public ArrayList<Book> cartBooks = new ArrayList<Book>();
+
+    ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -58,6 +63,10 @@ public class BookIndexed extends AppCompatActivity {
         final String bookImage = intent.getExtras().getString("ValueKey7");
 
         addToCart = (Button) findViewById(R.id.buy_button);
+        checkout = (Button) findViewById(R.id.checkout_Button);
+
+        progressDialog = new ProgressDialog(BookIndexed.this);
+
 
 
         final ImageView image = (ImageView) findViewById(R.id.book_image);
@@ -87,23 +96,37 @@ public class BookIndexed extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
+
                 Book book = new Book(bookTitle, bookAuthor, bookCategory, bookPrice, bookStock, bookInfo, bookImage);
 
                 cartBooks.add(book);
 
+                Toast.makeText(getApplicationContext(), "This book has been added to your cart!", Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
                 Intent intent;
                 intent = new Intent(BookIndexed.this, PlaceOrder.class);
                 Bundle args = new Bundle();
-                args.putSerializable("ARRAYLIST",(Serializable)cartBooks);
+                args.putSerializable("ARRAYLIST",(Serializable) cartBooks);
                 intent.putExtra("BUNDLE",args);
 
 
                 startActivity(intent);
 
 
-
             }
         });
+
+
     }
 
 
