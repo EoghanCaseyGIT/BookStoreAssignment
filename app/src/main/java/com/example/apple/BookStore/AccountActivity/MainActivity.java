@@ -9,12 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.apple.BookStore.AccountActivity.AdminApplication.AdminFeed;
 import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
 import com.example.apple.BookStore.AccountActivity.BookClasses.BookIndexed;
+import com.example.apple.BookStore.AccountActivity.UserApplication.SearchBook;
 import com.example.apple.BookStore.AccountActivity.UserApplication.ShoppingCart;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserDetails;
@@ -35,12 +37,18 @@ public class MainActivity extends AppCompatActivity {
     private List<Book> bookModelList = new ArrayList<Book>();
     private ListView list;
 
+    private Button search;
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        search = (Button) findViewById(R.id.goToSearchPage);
 
         list = (ListView) findViewById(R.id.bookListView);
         adapter = new CustomListAdapter(MainActivity.this, bookModelList);
@@ -50,8 +58,20 @@ public class MainActivity extends AppCompatActivity {
         final ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(this, R.layout.listview_layout);
 
 
+
+
         populateList();
+
+        search.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                startActivity(new Intent(MainActivity.this, SearchBook.class));
+
+            }
+        });
     }
+
 
     public void populateList() {
 
