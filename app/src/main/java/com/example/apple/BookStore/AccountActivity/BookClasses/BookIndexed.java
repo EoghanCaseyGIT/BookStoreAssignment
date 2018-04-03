@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,10 +20,13 @@ import com.example.apple.BookStore.AccountActivity.AdminApplication.SearchUser;
 import com.example.apple.BookStore.AccountActivity.AdminApplication.UpdateBook;
 import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.MainActivity;
+import com.example.apple.BookStore.AccountActivity.OrderClasses.Order;
 import com.example.apple.BookStore.AccountActivity.OrderClasses.PlaceOrder;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserDetails;
 import com.example.apple.BookStore.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,16 +45,35 @@ import java.util.List;
 public class BookIndexed extends AppCompatActivity {
 
     private TextView title, author, price, category, stock, info;
-    private Button addToCart, checkout;
+    String userComment;
+    private Button addToCart, checkout, review;
+    private EditText comment;
     public ArrayList<Book> cartBooks = new ArrayList<Book>();
 
+    String Database_Path = "All_Comments";
+    private FirebaseAuth auth;
+
     ProgressDialog progressDialog;
+
+    DatabaseReference databaseReference;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookindex);
+
+        comment = (EditText) findViewById(R.id.comment_Text);
+
+
+
+        review = (Button) findViewById(R.id.review_Button);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        //Below this is getting the book information and populating the textView
 
         Intent intent = getIntent();
 
@@ -123,6 +146,23 @@ public class BookIndexed extends AppCompatActivity {
                 startActivity(intent);
 
 
+            }
+        });
+
+        review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                userComment = comment.getText().toString().trim();
+                String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                int commentID = 0;
+                commentID = commentID+1;
+
+                CommentModel Comment = new CommentModel(userComment, bookTitle, UserID);
+
+                databaseReference.child(bookTitle).child(String.valueOf(commentID)).setValue(Comment);
+                progressDialog.dismiss();
             }
         });
 

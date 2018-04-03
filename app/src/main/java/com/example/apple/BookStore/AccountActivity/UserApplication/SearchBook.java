@@ -1,3 +1,4 @@
+
 package com.example.apple.BookStore.AccountActivity.UserApplication;
 
 
@@ -60,45 +61,13 @@ public class SearchBook extends AppCompatActivity {
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(this));
 
-
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("All_Books");
-                final Query query = ref.orderByChild("title").equalTo(searchField.toString());
-
-                FirebaseRecyclerOptions<Book> options = new FirebaseRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
-
-
-                FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Book, BookViewHolder>(options) {
-                    @Override
-                    public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                        // Create a new instance of the ViewHolder, in this case we are using a custom
-                        // layout called R.layout.message for each item
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_booksearchresults, parent, false);
-
-                        return new BookViewHolder(view);
-
-                    }
-
-                    @Override
-                    protected void onBindViewHolder(BookViewHolder holder, int position, Book model) {
-                        holder.setDetails(model.getTitle(), model.getAuthor(), model.getImageURL());
-                    }
-
-                    @Override
-                    public int getItemCount() {
-                        return 0;
-                    }
-                };
-                mResultList.setAdapter(adapter);
+                searchBook();
             }
         });
-
-
-
     }
-
 
     public void searchBook(){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("All_Books");
@@ -110,8 +79,7 @@ public class SearchBook extends AppCompatActivity {
         FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Book, BookViewHolder>(options) {
             @Override
             public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                // Create a new instance of the ViewHolder, in this case we are using a custom
-                // layout called R.layout.message for each item
+
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_booksearchresults, parent, false);
 
                 return new BookViewHolder(view);
@@ -193,4 +161,3 @@ public class SearchBook extends AppCompatActivity {
         }
     }
 }
-

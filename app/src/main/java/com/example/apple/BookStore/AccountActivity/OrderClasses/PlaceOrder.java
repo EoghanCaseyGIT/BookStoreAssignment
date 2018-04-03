@@ -81,6 +81,7 @@ public class PlaceOrder extends AppCompatActivity {
         purchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                 int orderId = 0;
