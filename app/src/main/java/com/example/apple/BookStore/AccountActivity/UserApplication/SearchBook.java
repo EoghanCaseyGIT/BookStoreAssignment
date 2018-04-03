@@ -45,14 +45,10 @@ public class SearchBook extends AppCompatActivity {
     private EditText searchField;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(activity_searchbook);
-
-
 
 
         bookDatabase = FirebaseDatabase.getInstance().getReference("All_Books");
@@ -65,42 +61,73 @@ public class SearchBook extends AppCompatActivity {
         mResultList.setLayoutManager(new LinearLayoutManager(this));
 
 
-        search.setOnClickListener(new View.OnClickListener(){
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                searchBooks();
+            public void onClick(View view) {
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("All_Books");
+                final Query query = ref.orderByChild("title").equalTo(searchField.toString());
 
+                FirebaseRecyclerOptions<Book> options = new FirebaseRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
+
+
+                FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Book, BookViewHolder>(options) {
+                    @Override
+                    public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                        // Create a new instance of the ViewHolder, in this case we are using a custom
+                        // layout called R.layout.message for each item
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_booksearchresults, parent, false);
+
+                        return new BookViewHolder(view);
+
+                    }
+
+                    @Override
+                    protected void onBindViewHolder(BookViewHolder holder, int position, Book model) {
+                        holder.setDetails(model.getTitle(), model.getAuthor(), model.getImageURL());
+                    }
+
+                    @Override
+                    public int getItemCount() {
+                        return 0;
+                    }
+                };
+                mResultList.setAdapter(adapter);
             }
         });
+
+
+
     }
 
-    private void searchBooks(){
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("All_Books");
-        Query query = ref.orderByChild("All_Books").equalTo(searchField.toString());
 
-        FirebaseRecyclerOptions<Book> options =
-                new FirebaseRecyclerOptions.Builder<Book>()
-                        .setQuery(query, Book.class)
-                        .build();
+    public void searchBook(){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("All_Books");
+        final Query query = ref.orderByChild("title").equalTo(searchField.toString());
+
+        FirebaseRecyclerOptions<Book> options = new FirebaseRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
+
 
         FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Book, BookViewHolder>(options) {
             @Override
             public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 // Create a new instance of the ViewHolder, in this case we are using a custom
                 // layout called R.layout.message for each item
-                View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.listview_booksearchresults, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_booksearchresults, parent, false);
 
                 return new BookViewHolder(view);
+
             }
 
             @Override
             protected void onBindViewHolder(BookViewHolder holder, int position, Book model) {
                 holder.setDetails(model.getTitle(), model.getAuthor(), model.getImageURL());
+            }
 
+            @Override
+            public int getItemCount() {
+                return 0;
             }
         };
-
         mResultList.setAdapter(adapter);
     }
 
