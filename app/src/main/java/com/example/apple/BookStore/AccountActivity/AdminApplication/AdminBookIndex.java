@@ -2,17 +2,22 @@ package com.example.apple.BookStore.AccountActivity.AdminApplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
 import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.R;
@@ -34,6 +39,8 @@ public class AdminBookIndex extends AppCompatActivity {
     private TextView title, author, price, category, stock, info;
     private Button purchase, edit, delete;
 
+    String oldTitle, oldImage, oldAuthor, oldPrice, oldCategory, oldInformation, oldStock;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -41,6 +48,7 @@ public class AdminBookIndex extends AppCompatActivity {
         setContentView(R.layout.activity_adminbookindex);
 
         Intent intent = getIntent();
+
 
         String bookTitle = intent.getExtras().getString("ValueKey");
         String bookAuthor = intent.getExtras().getString("ValueKey2");
@@ -79,6 +87,14 @@ public class AdminBookIndex extends AppCompatActivity {
         stock.setText(bookStock);
         info.setText(bookInfo);
 
+        oldTitle = bookTitle;
+        oldImage = bookImage;
+        oldAuthor = bookAuthor;
+        oldPrice = bookPrice;
+        oldCategory = bookCategory;
+        oldInformation = bookInfo;
+        oldStock = bookStock;
+
 
         purchase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +109,15 @@ public class AdminBookIndex extends AppCompatActivity {
             public void onClick(View v) {
 
           deleteItem();
+
+            }
+        });
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showUpdateDialog(title.getText().toString().trim());
 
             }
         });
@@ -120,6 +145,85 @@ public class AdminBookIndex extends AppCompatActivity {
 //        Intent adminFeed = new Intent(this, AdminFeed.class);
 //        this.startActivity(adminFeed);
     }
+
+    private boolean update(String imageURL, String title, String author, String stock, String price, String category, String info){
+
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("All_Books").child(oldTitle);
+
+        Book book = new Book(oldImage, title, author, stock, price, category, info);
+
+        databaseReference.setValue(book);
+
+        Toast.makeText(this, "Book Updated.", Toast.LENGTH_LONG).show();
+
+        return true;
+
+    }
+
+    private void showUpdateDialog(String title){
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = getLayoutInflater();
+
+        final View dialogView = inflater.inflate(R.layout.layout_updatedialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText editTitle = (EditText) dialogView.findViewById(R.id.newTitle);
+        final EditText editAuthor = (EditText) dialogView.findViewById(R.id.newAuthor);
+        final EditText editStock = (EditText) dialogView.findViewById(R.id.newStock);
+        final EditText editPrice = (EditText) dialogView.findViewById(R.id.newPrice);
+        final EditText editCategory = (EditText) dialogView.findViewById(R.id.newCategory);
+        final EditText editInformation = (EditText) dialogView.findViewById(R.id.newInformation);
+
+        editTitle.setText(oldTitle);
+        editAuthor.setText(oldAuthor);
+        editStock.setText(oldStock);
+        editPrice.setText(oldPrice);
+        editCategory.setText(oldCategory);
+        editInformation.setText(oldInformation);
+
+
+
+
+        Button buttonUpdate = (Button) dialogView.findViewById(R.id.newUpdateButton);
+
+
+        dialogBuilder.setTitle("Update Book: " + title);
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String newTitle = editTitle.getText().toString().trim();
+                String newAuthor = editAuthor.getText().toString().trim();
+                String newStock = editStock.getText().toString().trim();
+                String newPrice = editPrice.getText().toString().trim();
+                String newCategory = editCategory.getText().toString().trim();
+                String newInfo = editInformation.getText().toString().trim();
+
+                if(!TextUtils.isEmpty(newTitle)){
+                    update(oldImage, newTitle, newAuthor, newPrice, newCategory, newStock, newInfo);
+                    alertDialog.dismiss();
+                }
+
+
+
+            }
+        });
+
+
+
+
+
+
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

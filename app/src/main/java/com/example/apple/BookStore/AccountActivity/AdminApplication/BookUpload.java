@@ -170,6 +170,7 @@ public class BookUpload extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
+
                             String Title = title.getText().toString().trim();
                             String Author = author.getText().toString().trim();
                             String Price = price.getText().toString().trim();
@@ -184,9 +185,8 @@ public class BookUpload extends AppCompatActivity {
                             @SuppressWarnings("VisibleForTests")
                             Book book = new Book(taskSnapshot.getDownloadUrl().toString(), Title, Author, Price, Category, Stock, Info);
 
-                            String ImageUploadId = databaseReference.push().getKey();
 
-                            databaseReference.child(ImageUploadId).setValue(book);
+                            databaseReference.child(Title).setValue(book);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

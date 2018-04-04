@@ -16,9 +16,8 @@ public class Book implements Serializable {
     String stock;
     String info;
 
-    public Book(){
+    public Book(){}
 
-    }
 
 
     public Book(String imageURL, String title, String author, String price, String category, String stock, String info){
