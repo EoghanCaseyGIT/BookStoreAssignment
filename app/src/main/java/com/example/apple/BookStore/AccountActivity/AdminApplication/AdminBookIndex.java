@@ -190,7 +190,7 @@ public class AdminBookIndex extends AppCompatActivity {
         Button buttonUpdate = (Button) dialogView.findViewById(R.id.newUpdateButton);
 
 
-        dialogBuilder.setTitle("Update Book: " + title);
+//        dialogBuilder.setTitle("Update Book:");
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
@@ -216,11 +216,6 @@ public class AdminBookIndex extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
     }
 
 
@@ -229,7 +224,6 @@ public class AdminBookIndex extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.admin_menu, menu);
-
         return true;
     }
 
@@ -246,26 +240,15 @@ public class AdminBookIndex extends AppCompatActivity {
                 this.startActivity(addBookIntent);
                 return true;
 
-            case R.id.updateBook:
-                Intent updateBookIntent = new Intent(this, UpdateBook.class);
-                this.startActivity(updateBookIntent);
-                return true;
             case R.id.searchUser:
                 Intent searchUserIntent = new Intent(this, SearchUser.class);
                 this.startActivity(searchUserIntent);
-                return true;
-
-            case R.id.account:
-                Intent profileIntent = new Intent(this, UserAccount.class);
-                this.startActivity(profileIntent);
                 return true;
 
             case R.id.logout:
                 Intent logoutIntent = new Intent(this, Login.class);
                 this.startActivity(logoutIntent);
                 return true;
-
-
             default:
                 return super.onOptionsItemSelected(item);
         }

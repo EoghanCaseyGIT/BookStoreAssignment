@@ -14,29 +14,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.apple.BookStore.AccountActivity.AdminApplication.AdminFeed;
-import com.example.apple.BookStore.AccountActivity.AdminApplication.BookUpload;
-import com.example.apple.BookStore.AccountActivity.AdminApplication.SearchUser;
-import com.example.apple.BookStore.AccountActivity.AdminApplication.UpdateBook;
 import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.MainActivity;
-import com.example.apple.BookStore.AccountActivity.OrderClasses.Order;
 import com.example.apple.BookStore.AccountActivity.OrderClasses.PlaceOrder;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserDetails;
 import com.example.apple.BookStore.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by eoghancasey on 27/03/2018.

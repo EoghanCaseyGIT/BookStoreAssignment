@@ -32,14 +32,12 @@ public class UserDetails extends AppCompatActivity{
 
     ProgressDialog progressDialog;
 
-    EditText address, cardNum, cardDate;
+    EditText username, address, cardNum, cardDate;
 
     DatabaseReference databaseReference;
 
 
-
-
-
+    
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +49,7 @@ public class UserDetails extends AppCompatActivity{
         address = (EditText) findViewById(R.id.address);
         cardNum = (EditText) findViewById(R.id.cardNumber);
         cardDate = (EditText) findViewById(R.id.cardDate);
+        username = (EditText) findViewById(R.id.username_Text);
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
@@ -59,14 +58,6 @@ public class UserDetails extends AppCompatActivity{
 
         progressDialog = new ProgressDialog(UserDetails.this);
 
-
-        //get current user
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-
-        final EditText Address = (EditText) findViewById(R.id.address);
-        final EditText CardNumber = (EditText) findViewById(R.id.cardNumber);
-        final EditText CardDate = (EditText) findViewById(R.id.cardDate);
 
         Button Save = (Button) findViewById(R.id.saveDetails);
 
@@ -88,13 +79,15 @@ public class UserDetails extends AppCompatActivity{
 
 
         String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String Username = username.getText().toString().trim();
         String Address = address.getText().toString().trim();
         String CardNum = cardNum.getText().toString().trim();
         String CardDate = cardDate.getText().toString().trim();
 
+
         progressDialog.dismiss();
 
-        UserDetailsModel user = new UserDetailsModel(UserID, Address, CardNum, CardDate);
+        UserDetailsModel user = new UserDetailsModel(UserID, Username, Address, CardNum, CardDate);
 
 
         databaseReference.child(UserID).setValue(user);

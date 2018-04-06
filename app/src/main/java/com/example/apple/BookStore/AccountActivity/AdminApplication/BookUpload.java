@@ -223,7 +223,6 @@ public class BookUpload extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.admin_menu, menu);
-
         return true;
     }
 
@@ -232,7 +231,6 @@ public class BookUpload extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.main:
-
                 Intent adminFeed = new Intent(this, AdminFeed.class);
                 this.startActivity(adminFeed);
                 return true;
@@ -241,26 +239,15 @@ public class BookUpload extends AppCompatActivity {
                 this.startActivity(addBookIntent);
                 return true;
 
-            case R.id.updateBook:
-                Intent updateBookIntent = new Intent(this, UpdateBook.class);
-                this.startActivity(updateBookIntent);
-                return true;
             case R.id.searchUser:
                 Intent searchUserIntent = new Intent(this, SearchUser.class);
                 this.startActivity(searchUserIntent);
-                return true;
-
-            case R.id.profile:
-                Intent profileIntent = new Intent(this, UserAccount.class);
-                this.startActivity(profileIntent);
                 return true;
 
             case R.id.logout:
                 Intent logoutIntent = new Intent(this, Login.class);
                 this.startActivity(logoutIntent);
                 return true;
-
-
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -11,16 +11,8 @@
         android:title="Add Book"
         />
     <item
-        android:id="@+id/updateBook"
-        android:title="Update Book"
-        />
-    <item
         android:id="@+id/searchUser"
         android:title="Search User"
-        />
-    <item
-        android:id="@+id/account"
-        android:title="Edit Account"
         />
 
     <item

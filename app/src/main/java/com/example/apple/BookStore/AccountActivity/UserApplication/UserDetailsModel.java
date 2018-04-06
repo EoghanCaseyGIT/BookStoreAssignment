@@ -11,6 +11,8 @@ public class UserDetailsModel {
 
     String userID;
 
+    String username;
+
     String address;
     String cardNumber;
     String cardDate;
@@ -21,8 +23,9 @@ public class UserDetailsModel {
     }
 
 
-    public UserDetailsModel(String userID, String address, String cardNumber, String cardDate){
+    public UserDetailsModel(String userID, String username, String address, String cardNumber, String cardDate){
 
+        this.username = username;
         this.userID = userID;
         this.address = address;
         this.cardNumber = cardNumber;
