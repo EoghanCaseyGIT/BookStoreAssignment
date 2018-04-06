@@ -235,10 +235,6 @@ public class AdminBookIndex extends AppCompatActivity {
                 Intent adminFeed = new Intent(this, AdminFeed.class);
                 this.startActivity(adminFeed);
                 return true;
-            case R.id.addBook:
-                Intent addBookIntent = new Intent(this, BookUpload.class);
-                this.startActivity(addBookIntent);
-                return true;
 
             case R.id.searchUser:
                 Intent searchUserIntent = new Intent(this, SearchUser.class);

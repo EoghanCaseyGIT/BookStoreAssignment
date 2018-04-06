@@ -9,14 +9,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 
 import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
 import com.example.apple.BookStore.AccountActivity.BookClasses.BookIndexed;
+import com.example.apple.BookStore.AccountActivity.BookClasses.SearchBook;
 import com.example.apple.BookStore.AccountActivity.CustomListAdapter;
 import com.example.apple.BookStore.AccountActivity.Login;
+import com.example.apple.BookStore.AccountActivity.MainActivity;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.R;
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +44,8 @@ public class AdminFeed extends AppCompatActivity {
     private List<Book> bookModelList = new ArrayList<Book>();
     private ListView list;
 
+    private ImageButton upload;
+
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -52,10 +57,21 @@ public class AdminFeed extends AppCompatActivity {
         list = (ListView) findViewById(R.id.bookListView);
         adapter = new CustomListAdapter(AdminFeed.this, bookModelList);
 
+        upload = (ImageButton) findViewById(R.id.upload_Button);
+
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://bookstore-30213.firebaseio.com/All_Books");
 
         final ArrayAdapter<String> myArrayAdapter = new ArrayAdapter<String>(this, R.layout.listview_layout);
 
+
+        upload.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                startActivity(new Intent(AdminFeed.this, BookUpload.class));
+
+            }
+        });
 
         populateList();
     }
@@ -114,10 +130,6 @@ public class AdminFeed extends AppCompatActivity {
             case R.id.main:
                 Intent adminFeed = new Intent(this, AdminFeed.class);
                 this.startActivity(adminFeed);
-                return true;
-            case R.id.addBook:
-                Intent addBookIntent = new Intent(this, BookUpload.class);
-                this.startActivity(addBookIntent);
                 return true;
 
             case R.id.searchUser:

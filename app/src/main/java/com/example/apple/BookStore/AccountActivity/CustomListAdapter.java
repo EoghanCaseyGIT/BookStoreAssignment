@@ -61,7 +61,7 @@ public class CustomListAdapter extends BaseAdapter {
 
         ImageView image = (ImageView) convertView.findViewById(R.id.imageView);
 
-        String url =(book.getImageURL());
+        String url = (book.getImageURL());
 
         Picasso.with(activity)
                 .load(url)

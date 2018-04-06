@@ -5,11 +5,6 @@
         android:id="@+id/main"
         android:title="Book Catalogue"
         />
-
-    <item
-        android:id="@+id/addBook"
-        android:title="Add Book"
-        />
     <item
         android:id="@+id/searchUser"
         android:title="Search User"

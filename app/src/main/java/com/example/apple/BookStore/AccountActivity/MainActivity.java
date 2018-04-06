@@ -11,13 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.apple.BookStore.AccountActivity.AdminApplication.AdminFeed;
 import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
 import com.example.apple.BookStore.AccountActivity.BookClasses.BookIndexed;
-import com.example.apple.BookStore.AccountActivity.UserApplication.SearchBook;
-import com.example.apple.BookStore.AccountActivity.UserApplication.ShoppingCart;
+import com.example.apple.BookStore.AccountActivity.BookClasses.SearchBook;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserDetails;
 import com.example.apple.BookStore.R;

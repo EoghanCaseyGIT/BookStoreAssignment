@@ -37,7 +37,7 @@ public class UserDetails extends AppCompatActivity{
     DatabaseReference databaseReference;
 
 
-    
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
