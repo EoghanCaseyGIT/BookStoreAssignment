@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,6 +44,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static com.example.apple.BookStore.R.layout.*;
 import static com.example.apple.BookStore.R.layout.activity_searchbook;
@@ -61,6 +64,9 @@ public class SearchBook extends AppCompatActivity {
     ArrayList<String> authorNameList;
     ArrayList<String> imageList;
     SearchBookAdapter searchAdapter;
+
+    private List<Book> bookModelList = new ArrayList<Book>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +104,6 @@ public class SearchBook extends AppCompatActivity {
                 if (!s.toString().isEmpty()) {
                     setAdapter(s.toString());
                 } else {
-                    /*
-                    * Clear the list when editText is empty
-                    * */
                     bookTitleList.clear();
                     authorNameList.clear();
                     imageList.clear();
@@ -114,9 +117,7 @@ public class SearchBook extends AppCompatActivity {
         databaseReference.child("All_Books").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                /*
-                * Clear the list for every new search
-                * */
+
                 bookTitleList.clear();
                 authorNameList.clear();
                 imageList.clear();
@@ -124,9 +125,6 @@ public class SearchBook extends AppCompatActivity {
 
                 int counter = 0;
 
-                /*
-                * Search all users for matching searched string
-                * */
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String uid = snapshot.getKey();
                     String full_title = snapshot.child("title").getValue(String.class);
@@ -144,15 +142,11 @@ public class SearchBook extends AppCompatActivity {
                         imageList.add(bookImage);
                         counter++;
                     }
-
-                    /*
-                    * Get maximum of 15 searched results only
-                    * */
                     if (counter == 15)
                         break;
                 }
 
-                searchAdapter = new SearchBookAdapter(SearchBook.this, bookTitleList, authorNameList, imageList);
+                searchAdapter = new SearchBookAdapter(SearchBook.this, bookTitleList, authorNameList, imageList, bookModelList);
                 recyclerView.setAdapter(searchAdapter);
             }
 

@@ -1,6 +1,7 @@
 package com.example.apple.BookStore.AccountActivity.BookClasses;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.apple.BookStore.AccountActivity.MainActivity;
 import com.example.apple.BookStore.R;
 
+
 import java.util.ArrayList;
+import java.util.List;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 /**
  * Created by eoghancasey on 06/04/2018.
@@ -23,6 +29,8 @@ public class SearchBookAdapter extends RecyclerView.Adapter<SearchBookAdapter.Se
     ArrayList<String> bookTitleList;
     ArrayList<String> authorNameList;
     ArrayList<String> imageList;
+
+    private List<Book> bookModelList = new ArrayList<Book>();
 
     class SearchViewHolder extends RecyclerView.ViewHolder {
         ImageView bookImage;
@@ -40,11 +48,12 @@ public class SearchBookAdapter extends RecyclerView.Adapter<SearchBookAdapter.Se
         }
     }
 
-    public SearchBookAdapter(Context context, ArrayList<String> bookTitleList, ArrayList<String> authorNameList, ArrayList<String> imageList) {
+    public SearchBookAdapter(Context context, ArrayList<String> bookTitleList, ArrayList<String> authorNameList, ArrayList<String> imageList, List<Book> bookModelList) {
         this.context = context;
         this.bookTitleList = bookTitleList;
         this.authorNameList = authorNameList;
         this.imageList = imageList;
+        this.bookModelList = bookModelList;
     }
 
     @Override
@@ -59,14 +68,13 @@ public class SearchBookAdapter extends RecyclerView.Adapter<SearchBookAdapter.Se
         holder.author_name.setText(authorNameList.get(position));
         Glide.with(context).load(imageList.get(position)).into(holder.bookImage);
 
-        holder.setOnClickListener(new View.OnClickListener() {
+        holder.full_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Title Clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 
 
     @Override

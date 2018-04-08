@@ -25,6 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Book> bookModelList = new ArrayList<Book>();
     private ListView list;
 
-    private Button search;
+    private Button search, sorttitle, sortauthor;
 
 
 
@@ -47,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         search = (Button) findViewById(R.id.goToSearchPage);
 
+        sorttitle = (Button) findViewById(R.id.button_sort);
+        sortauthor = (Button) findViewById(R.id.button_sort_author);
+
         list = (ListView) findViewById(R.id.bookListView);
         adapter = new CustomListAdapter(MainActivity.this, bookModelList);
 
@@ -58,6 +64,35 @@ public class MainActivity extends AppCompatActivity {
 
 
         populateList();
+
+        sorttitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(bookModelList, new Comparator<Book>() {
+                    @Override
+                    public int compare(Book book, Book t1) {
+                        return book.getTitle().compareTo(t1.getTitle());
+                    }
+                });
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        sortauthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Collections.sort(bookModelList, new Comparator<Book>() {
+                    @Override
+                    public int compare(Book book, Book t1) {
+                        return book.getAuthor().compareTo(t1.getAuthor());
+                    }
+                });
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+
 
         search.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -81,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
                     Book book = ds.getValue(Book.class);
 
                     bookModelList.add(book);
-
                     list.setAdapter(adapter);
 
                 }
