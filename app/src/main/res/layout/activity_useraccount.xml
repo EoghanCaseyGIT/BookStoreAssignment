@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.example.apple.showmethecar.LoginActivity">
+    tools:context="com.example.apple.BookStore.LoginActivity">
 
     <EditText
         android:id="@+id/old_email"

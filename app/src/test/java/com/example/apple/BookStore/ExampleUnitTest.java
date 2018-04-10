@@ -1,4 +1,4 @@
-package com.example.apple.showmethecar;
+package com.example.apple.BookStore;
 
 import org.junit.Test;
 

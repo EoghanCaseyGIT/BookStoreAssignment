@@ -165,8 +165,7 @@ public class BookUpload extends AppCompatActivity {
             StorageReference storageReference2nd = storageReference.child(Storage_Path).child(System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
 
 
-            storageReference2nd.putFile(FilePathUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            storageReference2nd.putFile(FilePathUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 

@@ -8,17 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.apple.BookStore.AccountActivity.MainActivity;
 import com.example.apple.BookStore.R;
 
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static android.support.v4.content.ContextCompat.startActivity;
+import static java.sql.DriverManager.println;
 
 /**
  * Created by eoghancasey on 06/04/2018.
@@ -34,7 +30,7 @@ public class SearchBookAdapter extends RecyclerView.Adapter<SearchBookAdapter.Se
     ArrayList<String> categoryList;
     ArrayList<String> infoList;
 
-    ArrayList<String> bookModelList;
+
 
     class SearchViewHolder extends RecyclerView.ViewHolder {
         ImageView bookImage;
@@ -47,9 +43,6 @@ public class SearchBookAdapter extends RecyclerView.Adapter<SearchBookAdapter.Se
             author_name = (TextView) itemView.findViewById(R.id.author_name);
         }
 
-        public void setOnClickListener(View.OnClickListener onClickListener) {
-
-        }
     }
 
     public SearchBookAdapter(Context context, ArrayList<String> bookTitleList, ArrayList<String> authorNameList, ArrayList<String> imageList, ArrayList<String> priceList, ArrayList<String> stockList, ArrayList<String> categoryList, ArrayList<String> infoList ) {
@@ -61,6 +54,8 @@ public class SearchBookAdapter extends RecyclerView.Adapter<SearchBookAdapter.Se
         this.stockList = stockList;
         this.categoryList = categoryList;
         this.infoList = infoList;
+
+        println("stockList");
 
 
     }

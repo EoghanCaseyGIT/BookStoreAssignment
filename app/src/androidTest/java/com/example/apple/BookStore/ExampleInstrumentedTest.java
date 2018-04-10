@@ -1,4 +1,4 @@
-package com.example.apple.showmethecar;
+package com.example.apple.BookStore;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
