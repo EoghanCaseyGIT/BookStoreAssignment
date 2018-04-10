@@ -63,6 +63,10 @@ public class SearchBook extends AppCompatActivity {
     ArrayList<String> bookTitleList;
     ArrayList<String> authorNameList;
     ArrayList<String> imageList;
+    ArrayList<String> priceList;
+    ArrayList<String> stockList;
+    ArrayList<String> categoryList;
+    ArrayList<String> infoList;
     SearchBookAdapter searchAdapter;
 
     private List<Book> bookModelList = new ArrayList<Book>();
@@ -89,6 +93,10 @@ public class SearchBook extends AppCompatActivity {
         bookTitleList = new ArrayList<>();
         authorNameList = new ArrayList<>();
         imageList = new ArrayList<>();
+        priceList = new ArrayList<>();
+        stockList = new ArrayList<>();
+        categoryList = new ArrayList<>();
+        infoList = new ArrayList<>();
 
         search_edit_text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -130,23 +138,35 @@ public class SearchBook extends AppCompatActivity {
                     String full_title = snapshot.child("title").getValue(String.class);
                     String author_name = snapshot.child("author").getValue(String.class);
                     String bookImage = snapshot.child("imageURL").getValue(String.class);
+                    String price = snapshot.child("price").getValue(String.class);
+                    String stock = snapshot.child("stock").getValue(String.class);
+                    String category = snapshot.child("category").getValue(String.class);
+                    String info = snapshot.child("info").getValue(String.class);
 
                     if (full_title.toLowerCase().contains(searchedString.toLowerCase())) {
                         bookTitleList.add(full_title);
                         authorNameList.add(author_name);
                         imageList.add(bookImage);
+                        priceList.add(price);
+                        stockList.add(stock);
+                        categoryList.add(category);
+                        infoList.add(info);
                         counter++;
                     } else if (full_title.toLowerCase().contains(searchedString.toLowerCase())) {
                         bookTitleList.add(full_title);
                         authorNameList.add(author_name);
                         imageList.add(bookImage);
+                        priceList.add(price);
+                        stockList.add(stock);
+                        categoryList.add(category);
+                        infoList.add(info);
                         counter++;
                     }
                     if (counter == 15)
                         break;
                 }
 
-                searchAdapter = new SearchBookAdapter(SearchBook.this, bookTitleList, authorNameList, imageList, bookModelList);
+                searchAdapter = new SearchBookAdapter(SearchBook.this, bookTitleList, authorNameList, imageList, priceList, stockList, categoryList, infoList);
                 recyclerView.setAdapter(searchAdapter);
             }
 

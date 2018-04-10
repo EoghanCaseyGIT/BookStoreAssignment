@@ -12,13 +12,15 @@ public class CommentModel {
 
 
     String comment;
+    String rating;
     String bookID;
     String user;
 
     public CommentModel(){}
 
-    public CommentModel(String comment, String bookID, String user){
+    public CommentModel(String comment, String rating, String bookID, String user){
         this.comment = comment;
+        this.rating = rating;
         this.bookID = bookID;
         this.user = user;
     }
@@ -38,6 +40,14 @@ public class CommentModel {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public String getBookID() {

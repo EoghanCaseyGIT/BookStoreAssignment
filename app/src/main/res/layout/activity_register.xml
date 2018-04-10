@@ -53,13 +53,6 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/admin_button"
-            android:layout_width="93dp"
-            android:layout_height="65dp"
-            android:background="@color/colorAccent"
-            android:text="Register Admin" />
-
-        <Button
             android:id="@+id/btn_reset_password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

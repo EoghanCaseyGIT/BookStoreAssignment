@@ -7,12 +7,16 @@ import android.os.Bundle;
 
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.MainActivity;
 import com.example.apple.BookStore.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -96,6 +100,43 @@ public class UserDetails extends AppCompatActivity{
         startActivity(new Intent(UserDetails.this, MainActivity.class));
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch (item.getItemId()){
+            case R.id.main:
+
+                Intent mainFeed = new Intent(this, MainActivity.class);
+                this.startActivity(mainFeed);
+                return true;
+            case R.id.profile:
+                Intent profileIntent = new Intent(this, UserAccount.class);
+                this.startActivity(profileIntent);
+                return true;
+            case R.id.accountInformation:
+                Intent detailsIntent = new Intent(this, UserDetails.class);
+                this.startActivity(detailsIntent);
+                return true;
+            case R.id.logout:
+                Intent logoutIntent = new Intent(this, Login.class);
+                this.startActivity(logoutIntent);
+                return true;
+
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

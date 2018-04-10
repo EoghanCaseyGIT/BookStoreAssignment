@@ -19,15 +19,8 @@
 
     <item
         android:id="@+id/logout"
-        android:title="Sign Out"
+        android:title="Profile"
         />
-    <!--<item android:id="@+id/action_search"-->
-        <!--android:title="Search"-->
-        <!--android:icon="@drawable/search_button"-->
-        <!--app:showAsAction="ifRoom|collapseActionView"-->
-        <!--app:actionViewClass="android.support.v7.widget.SearchView"-->
-
-        <!--/>-->
 
 
 

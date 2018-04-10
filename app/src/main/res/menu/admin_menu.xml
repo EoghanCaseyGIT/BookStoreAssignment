@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/logout"
-        android:title="Sign Out"
+        android:title="Profile"
         />
 
 </menu>

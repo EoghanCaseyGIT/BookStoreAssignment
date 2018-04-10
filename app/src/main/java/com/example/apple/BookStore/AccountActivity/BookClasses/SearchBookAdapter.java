@@ -29,8 +29,12 @@ public class SearchBookAdapter extends RecyclerView.Adapter<SearchBookAdapter.Se
     ArrayList<String> bookTitleList;
     ArrayList<String> authorNameList;
     ArrayList<String> imageList;
+    ArrayList<String> priceList;
+    ArrayList<String> stockList;
+    ArrayList<String> categoryList;
+    ArrayList<String> infoList;
 
-    private List<Book> bookModelList = new ArrayList<Book>();
+    ArrayList<String> bookModelList;
 
     class SearchViewHolder extends RecyclerView.ViewHolder {
         ImageView bookImage;
@@ -48,12 +52,17 @@ public class SearchBookAdapter extends RecyclerView.Adapter<SearchBookAdapter.Se
         }
     }
 
-    public SearchBookAdapter(Context context, ArrayList<String> bookTitleList, ArrayList<String> authorNameList, ArrayList<String> imageList, List<Book> bookModelList) {
+    public SearchBookAdapter(Context context, ArrayList<String> bookTitleList, ArrayList<String> authorNameList, ArrayList<String> imageList, ArrayList<String> priceList, ArrayList<String> stockList, ArrayList<String> categoryList, ArrayList<String> infoList ) {
         this.context = context;
         this.bookTitleList = bookTitleList;
         this.authorNameList = authorNameList;
         this.imageList = imageList;
-        this.bookModelList = bookModelList;
+        this.priceList = priceList;
+        this.stockList = stockList;
+        this.categoryList = categoryList;
+        this.infoList = infoList;
+
+
     }
 
     @Override
@@ -63,7 +72,7 @@ public class SearchBookAdapter extends RecyclerView.Adapter<SearchBookAdapter.Se
     }
 
     @Override
-    public void onBindViewHolder(SearchViewHolder holder, int position) {
+    public void onBindViewHolder(SearchViewHolder holder, final int position) {
         holder.full_title.setText(bookTitleList.get(position));
         holder.author_name.setText(authorNameList.get(position));
         Glide.with(context).load(imageList.get(position)).into(holder.bookImage);
@@ -71,7 +80,18 @@ public class SearchBookAdapter extends RecyclerView.Adapter<SearchBookAdapter.Se
         holder.full_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Title Clicked", Toast.LENGTH_SHORT).show();
+
+
+                Intent i = new Intent(v.getContext(), BookIndexed.class);
+                i.putExtra("ValueKey", bookTitleList.get(position));
+                i.putExtra("ValueKey2", authorNameList.get(position));
+                i.putExtra("ValueKey3", priceList.get(position));
+                i.putExtra("ValueKey4", categoryList.get(position));
+                i.putExtra("ValueKey5", stockList.get(position));
+                i.putExtra("ValueKey6", infoList.get(position));
+                i.putExtra("ValueKey7", imageList.get(position));
+
+                context.startActivity(i);
             }
         });
     }

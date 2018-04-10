@@ -36,9 +36,9 @@ import java.util.ArrayList;
 public class BookIndexed extends AppCompatActivity {
 
     private TextView title, author, price, category, stock, info;
-    String userComment;
+    String userComment, ratingValue;
     private Button addToCart, checkout, review;
-    private EditText comment;
+    private EditText comment, rating;
     public ArrayList<Book> cartBooks = new ArrayList<Book>();
 
     String Database_Path = "All_Comments";
@@ -55,6 +55,7 @@ public class BookIndexed extends AppCompatActivity {
         setContentView(R.layout.activity_bookindex);
 
         comment = (EditText) findViewById(R.id.comment_Text);
+        rating = (EditText) findViewById(R.id.book_rating);
 
 
 
@@ -62,6 +63,9 @@ public class BookIndexed extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        int commentID = 0;
+        commentID = commentID+1;
 
 
         //Below this is getting the book information and populating the textView
@@ -140,19 +144,20 @@ public class BookIndexed extends AppCompatActivity {
             }
         });
 
+        final int finalCommentID = commentID + 1;
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 userComment = comment.getText().toString().trim();
+                ratingValue = rating.getText().toString().trim();
                 String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                int commentID = 0;
-                commentID = commentID+1;
+                
 
-                CommentModel Comment = new CommentModel(userComment, bookTitle, UserID);
+                CommentModel Comment = new CommentModel(userComment, ratingValue, bookTitle, UserID);
 
-                databaseReference.child(bookTitle).child(String.valueOf(commentID)).setValue(Comment);
+                databaseReference.child(bookTitle).child(String.valueOf(finalCommentID)).setValue(Comment);
                 progressDialog.dismiss();
             }
         });
