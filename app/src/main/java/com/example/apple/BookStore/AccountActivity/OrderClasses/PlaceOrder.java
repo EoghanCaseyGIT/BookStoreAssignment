@@ -44,6 +44,8 @@ public class PlaceOrder extends AppCompatActivity {
     private ListView list;
     Button purchase;
 
+    String username;
+
     Integer orderNum;
 
 
@@ -61,7 +63,8 @@ public class PlaceOrder extends AppCompatActivity {
         setContentView(R.layout.activity_order);
 
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String user = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
 
         progressDialog = new ProgressDialog(PlaceOrder.this);
 
@@ -84,12 +87,11 @@ public class PlaceOrder extends AppCompatActivity {
 
                 String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                int orderId = 0;
-                orderId = orderId+1;
+
 
                 Order order = new Order(UserID, orderedBooksList);
 
-                databaseReference.child(UserID).setValue(order);
+                databaseReference.child("orders").child(UserID).setValue(order);
                 progressDialog.dismiss();
 
                 Toast.makeText(getApplicationContext(), "Your order has been placed, thank you!", Toast.LENGTH_LONG).show();

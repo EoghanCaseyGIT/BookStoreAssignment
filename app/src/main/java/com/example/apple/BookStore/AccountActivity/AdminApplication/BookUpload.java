@@ -110,7 +110,7 @@ public class BookUpload extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                UploadImageFileToFirebaseStorage();
+                SaveBook();
 
             }
         });
@@ -154,7 +154,7 @@ public class BookUpload extends AppCompatActivity {
     }
 
 
-    public void UploadImageFileToFirebaseStorage() {
+    public void SaveBook() {
 
         if (FilePathUri != null) {
 

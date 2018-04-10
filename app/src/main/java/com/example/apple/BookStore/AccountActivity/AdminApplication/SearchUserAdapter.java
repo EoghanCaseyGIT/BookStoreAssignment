@@ -1,12 +1,15 @@
 package com.example.apple.BookStore.AccountActivity.AdminApplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.apple.BookStore.AccountActivity.UserApplication.UserIndex;
 import com.example.apple.BookStore.R;
 
 import java.util.ArrayList;
@@ -18,6 +21,8 @@ import java.util.ArrayList;
 public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.SearchViewHolder> {
     Context context;
     ArrayList<String> userNameList;
+    ArrayList<String> cardNumList;
+    ArrayList<String> addressList;
 
     class SearchViewHolder extends RecyclerView.ViewHolder {
         TextView user_name;
@@ -29,9 +34,11 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Se
         }
     }
 
-    public SearchUserAdapter(Context context, ArrayList<String> userNameList) {
+    public SearchUserAdapter(Context context, ArrayList<String> userNameList, ArrayList<String> cardNumList, ArrayList<String> addressList) {
         this.context = context;
         this.userNameList = userNameList;
+        this.cardNumList = cardNumList;
+        this.addressList = addressList;
     }
 
     @Override
@@ -41,13 +48,18 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Se
     }
 
     @Override
-    public void onBindViewHolder(SearchViewHolder holder, int position) {
+    public void onBindViewHolder(SearchViewHolder holder, final int position) {
         holder.user_name.setText(userNameList.get(position));
 
         holder.user_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "User Name Clicked", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(v.getContext(), UserIndex.class);
+                i.putExtra("ValueKey", userNameList.get(position));
+                i.putExtra("ValueKey2", addressList.get(position));
+                i.putExtra("ValueKey3", cardNumList.get(position));
+
+                context.startActivity(i);
             }
         });
     }

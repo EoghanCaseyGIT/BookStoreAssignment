@@ -32,6 +32,30 @@ public class UserDetailsModel {
         this.cardDate = cardDate;
     }
 
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public void setCardDate(String cardDate) {
+        this.cardDate = cardDate;
+    }
+
     public String getUserID() {
         return userID;
     }

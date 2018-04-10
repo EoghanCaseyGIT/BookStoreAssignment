@@ -80,20 +80,6 @@ public class BookIndexed extends AppCompatActivity {
         final String bookInfo = intent.getExtras().getString("ValueKey6");
         final String bookImage = intent.getExtras().getString("ValueKey7");
 
-        addToCart = (Button) findViewById(R.id.buy_button);
-        checkout = (Button) findViewById(R.id.checkout_Button);
-
-        progressDialog = new ProgressDialog(BookIndexed.this);
-
-
-
-        final ImageView image = (ImageView) findViewById(R.id.book_image);
-
-        Picasso.with(this)
-                .load(bookImage)
-                .into(image);
-
-
         title = (TextView) findViewById(R.id.book_title);
         author = (TextView) findViewById(R.id.book_author);
         price = (TextView) findViewById(R.id.book_price);
@@ -108,6 +94,22 @@ public class BookIndexed extends AppCompatActivity {
         category.setText(bookCategory);
         stock.setText(bookStock);
         info.setText(bookInfo);
+
+        addToCart = (Button) findViewById(R.id.buy_button);
+        checkout = (Button) findViewById(R.id.checkout_Button);
+
+        progressDialog = new ProgressDialog(BookIndexed.this);
+
+
+
+        final ImageView image = (ImageView) findViewById(R.id.book_image);
+
+        Picasso.with(this)
+                .load(bookImage)
+                .into(image);
+
+
+
 
 
         addToCart.setOnClickListener(new View.OnClickListener() {

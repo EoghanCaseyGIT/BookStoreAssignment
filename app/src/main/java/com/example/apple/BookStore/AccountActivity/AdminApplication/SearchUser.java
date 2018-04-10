@@ -38,6 +38,8 @@ public class SearchUser extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseUser firebaseUser;
     ArrayList<String> userNameList;
+    ArrayList<String> cardNumList;
+    ArrayList<String> addressList;
     SearchUserAdapter searchAdapter;
 
     @Override
@@ -56,6 +58,8 @@ public class SearchUser extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         userNameList = new ArrayList<>();
+        cardNumList = new ArrayList<>();
+        addressList = new ArrayList<>();
 
         search_edit_text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -72,6 +76,8 @@ public class SearchUser extends AppCompatActivity {
                     setAdapter(s.toString());
                 } else {
                     userNameList.clear();
+                    cardNumList.clear();
+                    addressList.clear();
                     recyclerView.removeAllViews();
                 }
             }
@@ -85,6 +91,8 @@ public class SearchUser extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 userNameList.clear();
+                cardNumList.clear();
+                addressList.clear();
                 recyclerView.removeAllViews();
 
                 int counter = 0;
@@ -93,19 +101,25 @@ public class SearchUser extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String uid = snapshot.getKey();
                     String user_name = snapshot.child("username").getValue(String.class);
+                    String user_address = snapshot.child("address").getValue(String.class);
+                    String card_number = snapshot.child("cardNumber").getValue(String.class);
 
                     if (user_name.toLowerCase().contains(searchedString.toLowerCase())) {
                         userNameList.add(user_name);
+                        addressList.add(user_address);
+                        cardNumList.add(card_number);
                         counter++;
                     } else if (user_name.toLowerCase().contains(searchedString.toLowerCase())) {
                         userNameList.add(user_name);
+                        addressList.add(user_address);
+                        cardNumList.add(card_number);
                         counter++;
                     }
                     if (counter == 15)
                         break;
                 }
 
-                searchAdapter = new SearchUserAdapter(SearchUser.this, userNameList);
+                searchAdapter = new SearchUserAdapter(SearchUser.this, userNameList, cardNumList, addressList);
                 recyclerView.setAdapter(searchAdapter);
             }
 

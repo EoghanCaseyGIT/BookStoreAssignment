@@ -25,6 +25,8 @@
 
         <activity android:name=".AccountActivity.UserApplication.UserDetails" />
         <activity android:name=".AccountActivity.UserApplication.UserAccount" />
+        <activity android:name=".AccountActivity.UserApplication.UserIndex" />
+
         <activity android:name=".AccountActivity.BookClasses.SearchBook" />
 
         <activity android:name=".AccountActivity.BookClasses.BookIndexed" />
@@ -34,6 +36,7 @@
         <activity android:name=".AccountActivity.AdminApplication.AdminFeed" />
         <activity android:name=".AccountActivity.AdminApplication.BookUpload" />
         <activity android:name=".AccountActivity.AdminApplication.SearchUser" />
+
 
 
         <activity android:name=".AccountActivity.OrderClasses.PlaceOrder" />
