@@ -190,7 +190,6 @@ public class AdminBookIndex extends AppCompatActivity {
         Button buttonUpdate = (Button) dialogView.findViewById(R.id.newUpdateButton);
 
 
-//        dialogBuilder.setTitle("Update Book:");
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();

@@ -43,6 +43,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginTop="32dp"
         android:text="Username:"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/username_textfield"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,25 +54,44 @@
         android:layout_marginEnd="5dp"
         android:layout_marginTop="8dp"
         android:text="Address:"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/address_textfield"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="93dp"
-        android:layout_height="30dp"
+        android:layout_width="98dp"
+        android:layout_height="26dp"
         android:layout_marginEnd="5dp"
         android:layout_marginTop="12dp"
         android:text="Card Number:"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/card_number_textfield"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <ListView
-        android:layout_width="366dp"
-        android:layout_height="309dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:id="@+id/orderListView"
+        android:layout_width="383dp"
+        android:layout_height="315dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1.5"
+        tools:layout_constraintTop_creator="1.5" />
+
+    <TextView
+        android:id="@+id/userOrderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="116dp"
+        android:text="Users' Orders:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintBottom_toTopOf="@+id/orderListView"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

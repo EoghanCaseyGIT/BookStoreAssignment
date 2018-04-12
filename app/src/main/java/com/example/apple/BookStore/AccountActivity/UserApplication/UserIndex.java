@@ -6,13 +6,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.apple.BookStore.AccountActivity.AdminApplication.AdminFeed;
 import com.example.apple.BookStore.AccountActivity.AdminApplication.SearchUser;
+import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
 import com.example.apple.BookStore.AccountActivity.Login;
+import com.example.apple.BookStore.AccountActivity.OrderClasses.OrderListAdapter;
 import com.example.apple.BookStore.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -23,7 +33,9 @@ public class UserIndex extends AppCompatActivity {
 
     private TextView username, address, cardNum;
 
-    DatabaseReference databaseReference;
+    private OrderListAdapter adapter;
+    private List<Book> orders = new ArrayList<Book>();
+    private ListView list;
 
 
     @Override
@@ -31,11 +43,20 @@ public class UserIndex extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userindex);
 
+
+
+        list = (ListView) findViewById(R.id.orderListView);
+        adapter = new OrderListAdapter(UserIndex.this, orders);
+
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://bookstore-30213.firebaseio.com/All_Books");
+
+
         Intent intent = getIntent();
 
         final String userName = intent.getExtras().getString("ValueKey");
         final String userAddress = intent.getExtras().getString("ValueKey2");
         final String cardNumber = intent.getExtras().getString("ValueKey3");
+
 
 
         username = (TextView) findViewById(R.id.username_textfield);
@@ -48,7 +69,32 @@ public class UserIndex extends AppCompatActivity {
 
 
 
-    }
+            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+
+            DatabaseReference allBooksRef = rootRef.child("All_Orders").child("orders").child(userName);
+            ValueEventListener valueEventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Book book = ds.getValue(Book.class);
+
+                        orders.add(book);
+                        list.setAdapter(adapter);
+
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            };
+
+            allBooksRef.addListenerForSingleValueEvent(valueEventListener);
+        }
+
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
