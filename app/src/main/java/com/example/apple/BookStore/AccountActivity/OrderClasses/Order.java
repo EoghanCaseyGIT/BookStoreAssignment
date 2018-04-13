@@ -11,32 +11,41 @@ import java.util.List;
 
 public class Order {
 
-    String userID;
-    List<Book> orderedBooksList = new ArrayList<Book>();
-
+    private static final long serialVersionUID = 1L;
+    private double total;
+    private List<Book> bookList;
     public Order(){
-
-    }
-
-    public Order(String userID, List orderedBooksList){
-        this.userID = userID;
-        this.orderedBooksList = orderedBooksList;
     }
 
 
-    public String getUserID() {
-        return userID;
+    public Order(List<Book> bookList) {
+
+
+        this.bookList = bookList;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public List<Book> getOrderedBooksList() {
-        return orderedBooksList;
+    public double getTotal() {
+        return total;
     }
 
-    public void setOrderedBooksList(List<Book> orderedBooksList) {
-        this.orderedBooksList = orderedBooksList;
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
     }
 }
+
+
+
+
+

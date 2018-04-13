@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.MainActivity;
+import com.example.apple.BookStore.AccountActivity.OrderClasses.Order;
 import com.example.apple.BookStore.AccountActivity.OrderClasses.PlaceOrder;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserDetails;
@@ -28,6 +29,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by eoghancasey on 27/03/2018.
@@ -39,7 +41,8 @@ public class BookIndexed extends AppCompatActivity {
     String userComment, ratingValue;
     private Button addToCart, checkout, review;
     private EditText comment, rating;
-    public ArrayList<Book> cartBooks = new ArrayList<Book>();
+    public List<Book> bookList = new ArrayList<Book>();
+    Order order = new Order(bookList);
 
     String Database_Path = "All_Comments";
     private FirebaseAuth auth;
@@ -116,15 +119,10 @@ public class BookIndexed extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-
                 Book book = new Book(bookTitle, bookAuthor, bookCategory, bookPrice, bookStock, bookInfo, bookImage);
 
-                cartBooks.add(book);
-
+                order.getBookList().add(book);
                 Toast.makeText(getApplicationContext(), "This book has been added to your cart!", Toast.LENGTH_LONG).show();
-
-
             }
         });
 
@@ -136,7 +134,7 @@ public class BookIndexed extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(BookIndexed.this, PlaceOrder.class);
                 Bundle args = new Bundle();
-                args.putSerializable("ARRAYLIST",(Serializable) cartBooks);
+                args.putSerializable("ARRAYLIST",(Serializable) bookList);
                 intent.putExtra("BUNDLE",args);
 
 
@@ -146,20 +144,17 @@ public class BookIndexed extends AppCompatActivity {
             }
         });
 
-        final int finalCommentID = commentID + 1;
+
+
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 userComment = comment.getText().toString().trim();
                 ratingValue = rating.getText().toString().trim();
-                String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                 
 
-                CommentModel Comment = new CommentModel(userComment, ratingValue, bookTitle, UserID);
-
-                databaseReference.child(bookTitle).child(String.valueOf(finalCommentID)).setValue(Comment);
+                databaseReference.child(bookTitle).setValue(userComment);
                 progressDialog.dismiss();
             }
         });

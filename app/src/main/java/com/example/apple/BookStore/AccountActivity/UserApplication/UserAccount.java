@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class UserAccount extends AppCompatActivity {
 
     private Button btnChangePassword, btnRemoveUser,
-            changePassword, remove, signOut, admin;
+            changePassword, remove, signOut, admin, userButton;
     private TextView email;
 
     private EditText oldEmail, password, newPassword;
@@ -67,6 +67,7 @@ public class UserAccount extends AppCompatActivity {
         changePassword = (Button) findViewById(R.id.changePass);
 
         admin = (Button) findViewById(R.id.admin_button);
+        userButton = (Button) findViewById(R.id.user_button);
 
 
         remove = (Button) findViewById(R.id.remove);
@@ -100,6 +101,13 @@ public class UserAccount extends AppCompatActivity {
             }
         });
 
+        userButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserAccount.this, MainActivity.class));
+                finish();
+            }
+        });
 
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,42 +232,7 @@ public class UserAccount extends AppCompatActivity {
         };
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
 
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-
-        switch (item.getItemId()){
-            case R.id.main:
-
-                Intent mainFeed = new Intent(this, MainActivity.class);
-                this.startActivity(mainFeed);
-                return true;
-            case R.id.profile:
-                Intent profileIntent = new Intent(this, UserAccount.class);
-                this.startActivity(profileIntent);
-                return true;
-            case R.id.accountInformation:
-                Intent detailsIntent = new Intent(this, UserDetails.class);
-                this.startActivity(detailsIntent);
-                return true;
-            case R.id.logout:
-                Intent logoutIntent = new Intent(this, Login.class);
-                this.startActivity(logoutIntent);
-                return true;
-
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     protected void onResume() {

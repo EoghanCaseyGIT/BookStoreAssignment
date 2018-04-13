@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.MainActivity;
@@ -33,9 +34,8 @@ public class UserDetails extends AppCompatActivity{
 
     String Database_Path = "User_Information";
     private FirebaseAuth auth;
-
     ProgressDialog progressDialog;
-
+    boolean success = true;
     EditText username, address, cardNum, cardDate;
 
     DatabaseReference databaseReference;
@@ -88,18 +88,32 @@ public class UserDetails extends AppCompatActivity{
         String CardNum = cardNum.getText().toString().trim();
         String CardDate = cardDate.getText().toString().trim();
 
+        if(CardNum.isEmpty() || CardNum.length() == 0 || CardNum.equals("") || CardNum == null){
+            success = false;
+            Toast.makeText(getApplicationContext(), "You must enter a card number.", Toast.LENGTH_LONG).show();
+        }
+        if(CardDate.isEmpty() || CardDate.length() == 0 || CardDate.equals("") || CardDate == null){
+            success = false;
+            Toast.makeText(getApplicationContext(), "You must enter a card expiry date.", Toast.LENGTH_LONG).show();
+        }
+        if(CardNum.length() < 16) {
+            success = false;
+            Toast.makeText(getApplicationContext(), "Enter a 16 digit card number.", Toast.LENGTH_LONG).show();
+        }
+        if(CardDate.length() != 5){
+            success = false;
+            Toast.makeText(getApplicationContext(), "Enter a valid date. XX/XX format only.", Toast.LENGTH_LONG).show();
+        }
 
-        progressDialog.dismiss();
+        else {
+            progressDialog.setTitle("Saving your information..");
+            progressDialog.show();
+            UserDetailsModel user = new UserDetailsModel(UserID, Username, Address, CardNum, CardDate);
+            databaseReference.child(UserID).setValue(user);
+            progressDialog.dismiss();
 
-        UserDetailsModel user = new UserDetailsModel(UserID, Username, Address, CardNum, CardDate);
-
-
-        databaseReference.child(UserID).setValue(user);
-
-
-        startActivity(new Intent(UserDetails.this, MainActivity.class));
-
-
+            startActivity(new Intent(UserDetails.this, MainActivity.class));
+        }
     }
 
     @Override

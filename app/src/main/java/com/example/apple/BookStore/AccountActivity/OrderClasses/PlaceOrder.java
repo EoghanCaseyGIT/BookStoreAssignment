@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
@@ -43,14 +44,13 @@ public class PlaceOrder extends AppCompatActivity {
     private CustomListAdapter adapter;
     private ListView list;
     Button purchase;
-
     private EditText username;
-
     String name;
-
-
+    boolean success = true;
     String Database_Path = "All_Orders";
     private FirebaseAuth auth;
+    List<Book> books = new ArrayList<Book>();
+    Order order = new Order(books);
 
     ProgressDialog progressDialog;
 
@@ -70,10 +70,10 @@ public class PlaceOrder extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("BUNDLE");
-        final ArrayList<Book> cartBooks = (ArrayList<Book>) args.getSerializable("ARRAYLIST");
+        final ArrayList<Book> bookList = (ArrayList<Book>) args.getSerializable("ARRAYLIST");
 
         list = (ListView) findViewById(R.id.bookListView);
-        adapter = new CustomListAdapter(PlaceOrder.this, cartBooks);
+        adapter = new CustomListAdapter(PlaceOrder.this, bookList);
 
 
         username = (EditText) findViewById(R.id.usernameText);
@@ -83,22 +83,32 @@ public class PlaceOrder extends AppCompatActivity {
 
         purchase = (Button) findViewById(R.id.confirm_button);
 
+
         purchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+
                 String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 name = username.getText().toString().trim();
 
-                Order order = new Order(UserID, cartBooks);
+                if(name.isEmpty() || name.length() == 0 || name.equals("") || name == null){
+                    success = false;
+                    Toast.makeText(getApplicationContext(), "You must enter a username.", Toast.LENGTH_LONG).show();
+                } else {
 
-                databaseReference.child("orders").child(name).setValue(order);
-                progressDialog.dismiss();
 
-                Toast.makeText(getApplicationContext(), "Your order has been placed, thank you!", Toast.LENGTH_LONG).show();
+                    Order order = new Order(bookList);
+
+                    databaseReference.child(name).setValue(order);
+                    progressDialog.dismiss();
+
+                    Toast.makeText(getApplicationContext(), "Your order has been placed, thank you!", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

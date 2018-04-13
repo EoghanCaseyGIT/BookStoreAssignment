@@ -12,26 +12,12 @@ public class CommentModel {
 
 
     String comment;
-    String rating;
-    String bookID;
-    String user;
+
 
     public CommentModel(){}
 
-    public CommentModel(String comment, String rating, String bookID, String user){
+    public CommentModel(String comment){
         this.comment = comment;
-        this.rating = rating;
-        this.bookID = bookID;
-        this.user = user;
-    }
-
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
     }
 
     public String getComment() {
@@ -41,21 +27,4 @@ public class CommentModel {
     public void setComment(String comment) {
         this.comment = comment;
     }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public String getBookID() {
-        return bookID;
-    }
-
-    public void setBookID(String bookID) {
-        this.bookID = bookID;
-    }
-
 }
