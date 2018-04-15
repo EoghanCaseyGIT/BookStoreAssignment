@@ -96,7 +96,7 @@ public class UserDetails extends AppCompatActivity{
             success = false;
             Toast.makeText(getApplicationContext(), "You must enter a card expiry date.", Toast.LENGTH_LONG).show();
         }
-        if(CardNum.length() < 16) {
+        if(CardNum.length() < 12) {
             success = false;
             Toast.makeText(getApplicationContext(), "Enter a 16 digit card number.", Toast.LENGTH_LONG).show();
         }

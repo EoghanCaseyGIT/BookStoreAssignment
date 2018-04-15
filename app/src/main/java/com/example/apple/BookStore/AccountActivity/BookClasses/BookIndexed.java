@@ -59,16 +59,9 @@ public class BookIndexed extends AppCompatActivity {
 
         comment = (EditText) findViewById(R.id.comment_Text);
         rating = (EditText) findViewById(R.id.book_rating);
-
-
-
         review = (Button) findViewById(R.id.review_Button);
-
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        int commentID = 0;
-        commentID = commentID+1;
 
 
         //Below this is getting the book information and populating the textView
@@ -121,7 +114,7 @@ public class BookIndexed extends AppCompatActivity {
 
                 Book book = new Book(bookTitle, bookAuthor, bookCategory, bookPrice, bookStock, bookInfo, bookImage);
 
-                order.getBookList().add(book);
+                bookList.add(book);
                 Toast.makeText(getApplicationContext(), "This book has been added to your cart!", Toast.LENGTH_LONG).show();
             }
         });
@@ -136,35 +129,19 @@ public class BookIndexed extends AppCompatActivity {
                 Bundle args = new Bundle();
                 args.putSerializable("ARRAYLIST",(Serializable) bookList);
                 intent.putExtra("BUNDLE",args);
-
-
                 startActivity(intent);
-
-
             }
         });
-
-
-
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 userComment = comment.getText().toString().trim();
                 ratingValue = rating.getText().toString().trim();
-
-                
-
                 databaseReference.child(bookTitle).setValue(userComment);
                 progressDialog.dismiss();
             }
         });
-
-
     }
-
-
-
-
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);

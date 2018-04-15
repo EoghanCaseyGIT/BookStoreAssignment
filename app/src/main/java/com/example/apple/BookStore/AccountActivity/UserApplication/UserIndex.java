@@ -42,59 +42,40 @@ public class UserIndex extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userindex);
-
-
-
         list = (ListView) findViewById(R.id.orderListView);
         adapter = new OrderListAdapter(UserIndex.this, orders);
-
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://bookstore-30213.firebaseio.com/All_Books");
-
-
         Intent intent = getIntent();
-
         final String userName = intent.getExtras().getString("ValueKey");
         final String userAddress = intent.getExtras().getString("ValueKey2");
         final String cardNumber = intent.getExtras().getString("ValueKey3");
 
-
-
         username = (TextView) findViewById(R.id.username_textfield);
         address = (TextView) findViewById(R.id.address_textfield);
         cardNum = (TextView) findViewById(R.id.card_number_textfield);
-
         username.setText(userName);
         address.setText(userAddress);
         cardNum.setText(cardNumber);
 
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference allBooksRef = rootRef.child("All_Orders").child(String.valueOf(userName));
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Book book = ds.getValue(Book.class);
 
+                    orders.add(book);
+                    list.setAdapter(adapter);
 
-            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-
-            DatabaseReference allBooksRef = rootRef.child("All_Orders").child("orders").child(userName);
-            ValueEventListener valueEventListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Book book = ds.getValue(Book.class);
-
-                        orders.add(book);
-                        list.setAdapter(adapter);
-
-                    }
                 }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            };
+            }
 
-            allBooksRef.addListenerForSingleValueEvent(valueEventListener);
-        }
-
-
-
-
-
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        allBooksRef.addListenerForSingleValueEvent(valueEventListener);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 /**
  * Created by eoghancasey on 28/03/2018.
@@ -96,11 +97,10 @@ public class PlaceOrder extends AppCompatActivity {
                     success = false;
                     Toast.makeText(getApplicationContext(), "You must enter a username.", Toast.LENGTH_LONG).show();
                 } else {
-
+                    String name = username.getText().toString().trim();
 
                     Order order = new Order(bookList);
-
-                    databaseReference.child(name).setValue(order);
+                    databaseReference.child(name).child("orders").setValue(order);
                     progressDialog.dismiss();
 
                     Toast.makeText(getApplicationContext(), "Your order has been placed, thank you!", Toast.LENGTH_LONG).show();

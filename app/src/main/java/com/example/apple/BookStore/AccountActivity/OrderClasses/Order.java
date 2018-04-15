@@ -2,25 +2,22 @@ package com.example.apple.BookStore.AccountActivity.OrderClasses;
 
 import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by eoghancasey on 28/03/2018.
  */
-
-public class Order {
+public class Order implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    private double total;
+    private String total;
     private List<Book> bookList;
     public Order(){
     }
 
 
     public Order(List<Book> bookList) {
-
-
         this.bookList = bookList;
     }
 
@@ -28,11 +25,11 @@ public class Order {
         return serialVersionUID;
     }
 
-    public double getTotal() {
+    public String getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(String total) {
         this.total = total;
     }
 
