@@ -95,18 +95,11 @@ public class BookIndexed extends AppCompatActivity {
         checkout = (Button) findViewById(R.id.checkout_Button);
 
         progressDialog = new ProgressDialog(BookIndexed.this);
-
-
-
         final ImageView image = (ImageView) findViewById(R.id.book_image);
 
         Picasso.with(this)
                 .load(bookImage)
                 .into(image);
-
-
-
-
 
         addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +133,7 @@ public class BookIndexed extends AppCompatActivity {
                 ratingValue = rating.getText().toString().trim();
 
                 databaseReference.child(bookTitle).child("Comment:").setValue("Comment: " + userComment + ". Rating: " + ratingValue);
+                Toast.makeText(getApplicationContext(), "Your Comment & Rating have been saved and added!", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }
         });
