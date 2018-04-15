@@ -135,9 +135,11 @@ public class BookIndexed extends AppCompatActivity {
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 userComment = comment.getText().toString().trim();
                 ratingValue = rating.getText().toString().trim();
-                databaseReference.child(bookTitle).setValue(userComment);
+
+                databaseReference.child(bookTitle).child("Comment:").setValue("Comment: " + userComment + ". Rating: " + ratingValue);
                 progressDialog.dismiss();
             }
         });

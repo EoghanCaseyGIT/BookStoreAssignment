@@ -12,12 +12,13 @@ public class CommentModel {
 
 
     String comment;
-
+    String rating;
 
     public CommentModel(){}
 
-    public CommentModel(String comment){
+    public CommentModel(String comment, String rating){
         this.comment = comment;
+        this.rating = rating;
     }
 
     public String getComment() {
