@@ -143,7 +143,9 @@ public class BookIndexed extends AppCompatActivity {
                 userComment = comment.getText().toString().trim();
                 ratingValue = rating.getText().toString().trim();
 
-                databaseReference.child(bookTitle).child("Comment:").setValue("Comment: " + userComment + ". Rating: " + ratingValue);
+                databaseReference.child(bookTitle).child("Comment").setValue(userComment);
+                databaseReference.child(bookTitle).child("Rating").setValue(ratingValue);
+
                 Toast.makeText(getApplicationContext(), "Your Comment & Rating have been saved!", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }
@@ -159,13 +161,9 @@ public class BookIndexed extends AppCompatActivity {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    String theComment = postSnapshot.child("Comment:").getValue(String.class);
-                    //Use the dataType you are using and also use the reference of those childs inside arrays\\
-                    System.out.println(theComment);
-                    // Putting Data into Getter Setter \\
+                    String comment = postSnapshot.child("Comment").getValue(String.class);
                     CommentModel commentList = new CommentModel();
-                    commentList.setComment(theComment);
-                    System.out.println(theComment);
+                    commentList.setComment(comment);
                     allComments.add(commentList);
                 }
                 if (allComments.size() == 0) {

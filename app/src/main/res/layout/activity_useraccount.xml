@@ -104,7 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/sign_out"
         android:layout_alignStart="@+id/sign_out"
-        android:text="@string/remove_user"
+        android:text="Delete Account"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="42dp"
         tools:layout_editor_absoluteY="408dp" />
