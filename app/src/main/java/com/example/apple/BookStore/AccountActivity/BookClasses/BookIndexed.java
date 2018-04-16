@@ -10,23 +10,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.MainActivity;
+import com.example.apple.BookStore.AccountActivity.OrderClasses.OrderListAdapter;
 import com.example.apple.BookStore.AccountActivity.OrderClasses.PlaceOrder;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserDetails;
+import com.example.apple.BookStore.AccountActivity.UserApplication.UserIndex;
 import com.example.apple.BookStore.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import static com.example.apple.BookStore.AccountActivity.MainActivity.bookList;
 
@@ -40,6 +47,8 @@ public class BookIndexed extends AppCompatActivity {
     String userComment, ratingValue;
     private Button addToCart, checkout, review;
     private EditText comment, rating;
+    ListView comments;
+    ArrayList<CommentModel> allComments = new ArrayList<>();
 
 
     String Database_Path = "All_Comments";
@@ -58,6 +67,8 @@ public class BookIndexed extends AppCompatActivity {
         comment = (EditText) findViewById(R.id.comment_Text);
         rating = (EditText) findViewById(R.id.book_rating);
         review = (Button) findViewById(R.id.review_Button);
+
+        comments = (ListView) findViewById(R.id.bookComments);
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
@@ -133,8 +144,38 @@ public class BookIndexed extends AppCompatActivity {
                 ratingValue = rating.getText().toString().trim();
 
                 databaseReference.child(bookTitle).child("Comment:").setValue("Comment: " + userComment + ". Rating: " + ratingValue);
-                Toast.makeText(getApplicationContext(), "Your Comment & Rating have been saved and added!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Your Comment & Rating have been saved!", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
+            }
+        });
+
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference allBooksRef = rootRef.child("All_Comments").child(bookTitle);
+        allBooksRef.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
+                allComments.clear(); // ArrayList<Pojo/Object> \\
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    String theComment = postSnapshot.child("Comment:").getValue(String.class);
+                    //Use the dataType you are using and also use the reference of those childs inside arrays\\
+                    System.out.println(theComment);
+                    // Putting Data into Getter Setter \\
+                    CommentModel commentList = new CommentModel();
+                    commentList.setComment(theComment);
+                    System.out.println(theComment);
+                    allComments.add(commentList);
+                }
+                if (allComments.size() == 0) {
+                    Toast.makeText(getApplicationContext(), "This book has no comments.", Toast.LENGTH_LONG).show();
+                }
+                CommentAdapter commentAdapter = new CommentAdapter(BookIndexed.this, allComments);
+                comments.setAdapter(commentAdapter);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
