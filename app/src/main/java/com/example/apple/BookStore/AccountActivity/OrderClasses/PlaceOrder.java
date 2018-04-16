@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
+import com.example.apple.BookStore.AccountActivity.BookClasses.SearchBook;
 import com.example.apple.BookStore.AccountActivity.CustomListAdapter;
 import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.MainActivity;
@@ -35,6 +36,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import static com.example.apple.BookStore.AccountActivity.MainActivity.bookList;
+
 /**
  * Created by eoghancasey on 28/03/2018.
  */
@@ -44,7 +47,7 @@ public class PlaceOrder extends AppCompatActivity {
 
     private CustomListAdapter adapter;
     private ListView list;
-    Button purchase;
+    Button purchase, clear;
     private EditText username;
     String name;
     boolean success = true;
@@ -66,6 +69,8 @@ public class PlaceOrder extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
 
 
+        clear = (Button) findViewById(R.id.clearOrder);
+
 
         progressDialog = new ProgressDialog(PlaceOrder.this);
 
@@ -78,18 +83,13 @@ public class PlaceOrder extends AppCompatActivity {
 
 
         username = (EditText) findViewById(R.id.usernameText);
-
-
         list.setAdapter(adapter);
-
         purchase = (Button) findViewById(R.id.confirm_button);
 
 
         purchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 String UserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 name = username.getText().toString().trim();
 
@@ -104,7 +104,16 @@ public class PlaceOrder extends AppCompatActivity {
                     progressDialog.dismiss();
 
                     Toast.makeText(getApplicationContext(), "Your order has been placed, thank you!", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(PlaceOrder.this, MainActivity.class));
                 }
+            }
+        });
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bookList.clear();
+                Toast.makeText(getApplicationContext(), "Your cart has been cleared, start shopping again!", Toast.LENGTH_LONG).show();
             }
         });
     }

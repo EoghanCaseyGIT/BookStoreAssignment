@@ -31,6 +31,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.apple.BookStore.AccountActivity.MainActivity.bookList;
+
 /**
  * Created by eoghancasey on 27/03/2018.
  */
@@ -41,8 +43,7 @@ public class BookIndexed extends AppCompatActivity {
     String userComment, ratingValue;
     private Button addToCart, checkout, review;
     private EditText comment, rating;
-    public List<Book> bookList = new ArrayList<Book>();
-    Order order = new Order(bookList);
+
 
     String Database_Path = "All_Comments";
     private FirebaseAuth auth;
@@ -60,6 +61,8 @@ public class BookIndexed extends AppCompatActivity {
         comment = (EditText) findViewById(R.id.comment_Text);
         rating = (EditText) findViewById(R.id.book_rating);
         review = (Button) findViewById(R.id.review_Button);
+
+
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -105,7 +108,7 @@ public class BookIndexed extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Book book = new Book(bookTitle, bookAuthor, bookCategory, bookPrice, bookStock, bookInfo, bookImage);
+                Book book = new Book(bookImage, bookTitle, bookAuthor, bookCategory, bookPrice, bookStock, bookInfo);
 
                 bookList.add(book);
                 Toast.makeText(getApplicationContext(), "This book has been added to your cart!", Toast.LENGTH_LONG).show();

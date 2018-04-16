@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
 import com.example.apple.BookStore.AccountActivity.BookClasses.BookIndexed;
 import com.example.apple.BookStore.AccountActivity.BookClasses.SearchBook;
+import com.example.apple.BookStore.AccountActivity.OrderClasses.Order;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserDetails;
 import com.example.apple.BookStore.R;
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private ListView list;
 
     private Button search, sorttitle, sortauthor;
+
+    public static List<Book> bookList = new ArrayList<Book>();
+    Order order = new Order(bookList);
 
 
 
