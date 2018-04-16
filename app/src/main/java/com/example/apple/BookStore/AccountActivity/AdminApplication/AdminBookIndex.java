@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 
 import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
 import com.example.apple.BookStore.AccountActivity.Login;
-import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,7 +61,7 @@ public class AdminBookIndex extends AppCompatActivity {
         delete = (Button) findViewById(R.id.delete_Button);
 
 
-        ImageView image = (ImageView) findViewById(R.id.book_image);
+        ImageView image = (ImageView) findViewById(R.id.image_book);
 
         Picasso.with(this)
                 .load(bookImage)
@@ -72,7 +70,7 @@ public class AdminBookIndex extends AppCompatActivity {
                 .into(image);
 
 
-        title = (TextView) findViewById(R.id.book_title);
+        title = (TextView) findViewById(R.id.title_book);
         author = (TextView) findViewById(R.id.book_author);
         price = (TextView) findViewById(R.id.book_price);
         category = (TextView) findViewById(R.id.book_category);

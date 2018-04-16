@@ -10,12 +10,12 @@
 
 
     <ImageView
-        android:id="@+id/book_image"
+        android:id="@+id/image_book"
         android:layout_width="122dp"
         android:layout_height="130dp"
         android:layout_weight="0.11"
 
-        />
+        app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal_background" />
 
     <Space
         android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
         android:layout_weight="0.11" />
 
     <TextView
-        android:id="@+id/book_title"
+        android:id="@+id/title_book"
         android:layout_width="124dp"
         android:layout_height="129dp"
         android:layout_alignParentTop="true"
@@ -39,19 +39,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.11" />
-
-    <TextView
-        android:id="@+id/book_author"
-        android:layout_width="6dp"
-        android:layout_height="130dp"
-        android:layout_below="@+id/carmodal"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_weight="1"
-        android:paddingLeft="5dp"
-        android:text="TextView"
-
-        />
 
 
 </LinearLayout>

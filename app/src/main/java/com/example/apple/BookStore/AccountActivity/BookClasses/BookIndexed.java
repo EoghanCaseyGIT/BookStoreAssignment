@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.MainActivity;
-import com.example.apple.BookStore.AccountActivity.OrderClasses.Order;
 import com.example.apple.BookStore.AccountActivity.OrderClasses.PlaceOrder;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.AccountActivity.UserApplication.UserDetails;
@@ -28,8 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.apple.BookStore.AccountActivity.MainActivity.bookList;
 
@@ -79,7 +76,7 @@ public class BookIndexed extends AppCompatActivity {
         final String bookInfo = intent.getExtras().getString("ValueKey6");
         final String bookImage = intent.getExtras().getString("ValueKey7");
 
-        title = (TextView) findViewById(R.id.book_title);
+        title = (TextView) findViewById(R.id.title_book);
         author = (TextView) findViewById(R.id.book_author);
         price = (TextView) findViewById(R.id.book_price);
         category = (TextView) findViewById(R.id.book_category);
@@ -98,7 +95,7 @@ public class BookIndexed extends AppCompatActivity {
         checkout = (Button) findViewById(R.id.checkout_Button);
 
         progressDialog = new ProgressDialog(BookIndexed.this);
-        final ImageView image = (ImageView) findViewById(R.id.book_image);
+        final ImageView image = (ImageView) findViewById(R.id.image_book);
 
         Picasso.with(this)
                 .load(bookImage)

@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.apple.BookStore.AccountActivity.Login;
-import com.example.apple.BookStore.AccountActivity.UserApplication.UserAccount;
 import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
 import com.example.apple.BookStore.R;
 
@@ -73,7 +72,7 @@ public class BookUpload extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
 
         //Assigning ID's to our buttons/text fields
-        SelectImage = (ImageView) findViewById(R.id.book_image);
+        SelectImage = (ImageView) findViewById(R.id.image_book);
 
         imageButton = (Button) findViewById(R.id.image_button);
         saveButton = (Button) findViewById(R.id.add_button);

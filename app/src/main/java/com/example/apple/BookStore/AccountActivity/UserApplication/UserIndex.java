@@ -1,5 +1,6 @@
 package com.example.apple.BookStore.AccountActivity.UserApplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,10 +9,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.apple.BookStore.AccountActivity.AdminApplication.AdminFeed;
 import com.example.apple.BookStore.AccountActivity.AdminApplication.SearchUser;
 import com.example.apple.BookStore.AccountActivity.BookClasses.Book;
+import com.example.apple.BookStore.AccountActivity.CustomListAdapter;
 import com.example.apple.BookStore.AccountActivity.Login;
 import com.example.apple.BookStore.AccountActivity.OrderClasses.OrderListAdapter;
 import com.example.apple.BookStore.R;
@@ -37,6 +40,8 @@ public class UserIndex extends AppCompatActivity {
     private List<Book> orders = new ArrayList<Book>();
     private ListView list;
 
+    ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -56,27 +61,88 @@ public class UserIndex extends AppCompatActivity {
         address.setText(userAddress);
         cardNum.setText(cardNumber);
 
+
+//        fetchBookList();
+
+        //---Your Reference to the bookList---\\
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference allBooksRef = rootRef.child("All_Orders").child(String.valueOf(userName));
-        ValueEventListener valueEventListener = new ValueEventListener() {
+        DatabaseReference allBooksRef = rootRef.child("All_Orders").child(userName).child("orders").child("bookList");
+        allBooksRef.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
+                orders.clear(); // ArrayList<Pojo/Object> \\
 
-                    Book book = ds.getValue(Book.class);
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    orders.add(book);
-                    list.setAdapter(adapter);
+                    String title = postSnapshot.child("title").getValue(String.class);
+                    //Use the dataType you are using and also use the reference of those childs inside arrays\\
+
+                    // Putting Data into Getter Setter \\
+                    Book bookList = new Book();
+                    bookList.setTitle(title);
+
+                    orders.add(bookList);
 
                 }
+
+                if (orders.size() == 0) {
+                    Toast.makeText(getApplicationContext(), "This user has no orders.", Toast.LENGTH_LONG).show();
+
+                }
+
+                //---Initialize your adapter as you have fetched the data---\\
+                OrderListAdapter customListAdapter = new OrderListAdapter(UserIndex.this, orders);
+                list.setAdapter(customListAdapter);
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
-        };
-        allBooksRef.addListenerForSingleValueEvent(valueEventListener);
+        });
     }
+
+//    private void fetchBookList() {
+//
+//        //---Your Reference to the bookList---\\
+//        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+//        DatabaseReference allBooksRef = rootRef.child("All_Orders").child("Anthony Hopkins").child("orders").child("bookList");
+//        allBooksRef.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+//            @Override
+//            public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
+//                orders.clear(); // ArrayList<Pojo/Object> \\
+//
+//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//
+//                    String title = postSnapshot.child("title").getValue(String.class);
+//                    //Use the dataType you are using and also use the reference of those childs inside arrays\\
+//
+//                    // Putting Data into Getter Setter \\
+//                    Book bookList = new Book();
+//                    bookList.setTitle(title);
+//
+//                    orders.add(bookList);
+//
+//                }
+//
+//                if (orders.size() == 0) {
+//                    Toast.makeText(getApplicationContext(), "This user has no orders.", Toast.LENGTH_LONG).show();
+//
+//                }
+//
+//                //---Initialize your adapter as you have fetched the data---\\
+//                OrderListAdapter customListAdapter = new OrderListAdapter(UserIndex.this, orders);
+//                list.setAdapter(customListAdapter);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

@@ -54,12 +54,11 @@ public class OrderListAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.listview_orderlayout, null);
 
-        TextView title = (TextView) convertView.findViewById(R.id.book_title);
-        TextView author = (TextView) convertView.findViewById(R.id.book_author);
+        TextView title = (TextView) convertView.findViewById(R.id.title_book);
 
         Book book = bookItems.get(position);
 
-        ImageView image = (ImageView) convertView.findViewById(R.id.book_image);
+        ImageView image = (ImageView) convertView.findViewById(R.id.image_book);
 
         String url = (book.getImageURL());
 
@@ -70,7 +69,6 @@ public class OrderListAdapter extends BaseAdapter {
                 .into(image);
 
         title.setText(book.getTitle());
-        author.setText(book.getAuthor());
 
         return convertView;
     }
