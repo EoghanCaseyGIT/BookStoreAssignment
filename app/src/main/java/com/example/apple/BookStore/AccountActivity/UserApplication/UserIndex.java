@@ -35,11 +35,9 @@ import java.util.List;
 public class UserIndex extends AppCompatActivity {
 
     private TextView username, address, cardNum;
-
     private OrderListAdapter adapter;
     private List<Book> orders = new ArrayList<Book>();
     private ListView list;
-
     ProgressDialog progressDialog;
 
 
@@ -61,41 +59,27 @@ public class UserIndex extends AppCompatActivity {
         address.setText(userAddress);
         cardNum.setText(cardNumber);
 
-
-//        fetchBookList();
-
-        //---Your Reference to the bookList---\\
+        //Connecting to my DB and retrieving the correct orders
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference allBooksRef = rootRef.child("All_Orders").child(userName).child("orders").child("bookList");
         allBooksRef.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
             @Override
             public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
-                orders.clear(); // ArrayList<Pojo/Object> \\
-
+                orders.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
                     String title = postSnapshot.child("title").getValue(String.class);
-                    //Use the dataType you are using and also use the reference of those childs inside arrays\\
-
-                    // Putting Data into Getter Setter \\
+                    String imageURL = postSnapshot.child("imageURL").getValue(String.class);
                     Book bookList = new Book();
                     bookList.setTitle(title);
-
+                    bookList.setImageURL(imageURL);
                     orders.add(bookList);
-
                 }
-
                 if (orders.size() == 0) {
                     Toast.makeText(getApplicationContext(), "This user has no orders.", Toast.LENGTH_LONG).show();
-
                 }
-
-                //---Initialize your adapter as you have fetched the data---\\
                 OrderListAdapter customListAdapter = new OrderListAdapter(UserIndex.this, orders);
                 list.setAdapter(customListAdapter);
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -103,46 +87,6 @@ public class UserIndex extends AppCompatActivity {
         });
     }
 
-//    private void fetchBookList() {
-//
-//        //---Your Reference to the bookList---\\
-//        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-//        DatabaseReference allBooksRef = rootRef.child("All_Orders").child("Anthony Hopkins").child("orders").child("bookList");
-//        allBooksRef.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
-//            @Override
-//            public void onDataChange(final com.google.firebase.database.DataSnapshot dataSnapshot) {
-//                orders.clear(); // ArrayList<Pojo/Object> \\
-//
-//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//
-//                    String title = postSnapshot.child("title").getValue(String.class);
-//                    //Use the dataType you are using and also use the reference of those childs inside arrays\\
-//
-//                    // Putting Data into Getter Setter \\
-//                    Book bookList = new Book();
-//                    bookList.setTitle(title);
-//
-//                    orders.add(bookList);
-//
-//                }
-//
-//                if (orders.size() == 0) {
-//                    Toast.makeText(getApplicationContext(), "This user has no orders.", Toast.LENGTH_LONG).show();
-//
-//                }
-//
-//                //---Initialize your adapter as you have fetched the data---\\
-//                OrderListAdapter customListAdapter = new OrderListAdapter(UserIndex.this, orders);
-//                list.setAdapter(customListAdapter);
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

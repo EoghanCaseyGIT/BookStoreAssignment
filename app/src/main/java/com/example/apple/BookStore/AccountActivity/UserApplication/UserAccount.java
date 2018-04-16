@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class UserAccount extends AppCompatActivity {
 
     private Button btnChangePassword, btnRemoveUser,
-            changePassword, remove, signOut, admin, userButton;
+            changePassword, remove, signOut;
     private TextView email;
 
     private EditText oldEmail, password, newPassword;
@@ -58,17 +58,11 @@ public class UserAccount extends AppCompatActivity {
                 }
             }
         };
-
-
         btnChangePassword = (Button) findViewById(R.id.change_password_button);
 
         btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
 
         changePassword = (Button) findViewById(R.id.changePass);
-
-        admin = (Button) findViewById(R.id.admin_button);
-        userButton = (Button) findViewById(R.id.user_button);
-
 
         remove = (Button) findViewById(R.id.remove);
         signOut = (Button) findViewById(R.id.sign_out);
@@ -92,22 +86,6 @@ public class UserAccount extends AppCompatActivity {
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }
-
-        admin.setOnClickListener(new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            startActivity(new Intent(UserAccount.this, AdminFeed.class));
-            finish();
-            }
-        });
-
-        userButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserAccount.this, MainActivity.class));
-                finish();
-            }
-        });
 
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,16 +156,13 @@ public class UserAccount extends AppCompatActivity {
                 }
             }
         });
-
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signOut();
             }
         });
-
     }
-
     @SuppressLint("SetTextI18n")
     private void setDataToView(FirebaseUser user) {
         email.setText("User Email: " + user.getEmail());
@@ -199,41 +174,30 @@ public class UserAccount extends AppCompatActivity {
         public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user == null) {
-                // user auth state is changed - user is null
-                // launch login activity
                 startActivity(new Intent(UserAccount.this, UserAccount.class));
                 finish();
             } else {
                 setDataToView(user);
-
             }
         }
-
-
     };
 
-    //sign out method
     public void signOut() {
         auth.signOut();
 
 
-// this listener will be called when there is change in firebase user session
         FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
                     startActivity(new Intent(UserAccount.this, UserAccount.class));
                     finish();
                 }
             }
         };
     }
-
-
-
+    
     @Override
     protected void onResume() {
         super.onResume();
